@@ -23,11 +23,12 @@ export const komiTalk: Command = {
     contexts: UniversalContextType,
     integrationTypes: UniversalIntegrationType,
     run: async (client: Client, interaction: CommandInteraction) => {
-        await interaction.deferReply();
         let res: string
         let errored: boolean = false;
         let shouldEphmeral: boolean = (interaction.options.get("ephmeral")?.value != undefined ? 
             interaction.options.get("ephmeral")?.value : false) as boolean;
+
+        await interaction.deferReply({ephemeral: shouldEphmeral});
         try {
             res = await chatBot(interaction.options.get("say", true).value as string, interaction.user);
         } catch (err: any) {
