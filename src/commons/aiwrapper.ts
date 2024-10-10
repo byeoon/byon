@@ -59,7 +59,7 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
     let chatHistory = history || loadChatHistory(user.id);
     let processedText = text;
 
-    model = getModel(user);
+    model = getModel(user, true);
     
     let response = (await model.startChat({
         history: chatHistory
