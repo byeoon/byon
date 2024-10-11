@@ -22,13 +22,60 @@ const getUserDBPath = (userId: string, path?: string): string => {
     }
 }
 
+export const getUserVars = (userId: string, variable: string): any => {
+    let userVars: object | undefined
+
+    try {
+        userVars = JSON.parse(fs.readFileSync(getUserDBPath(userId, "settings")).toString());
+    } catch (err: any) {
+        userVars = undefined;
+    }
+
+    if (!userVars) {
+        userVars = {};
+        fs.writeFileSync(getUserDBPath(userId, "settings"), JSON.stringify(userVars))
+
+        return undefined;
+    } else {
+        return (userVars as any)[variable];
+    }
+}
+
+export const setUserVars = (userId: string, variable: string, value: any): [boolean] => {
+    let userVars: object | undefined
+
+    try {
+        userVars = JSON.parse(fs.readFileSync(getUserDBPath(userId, "settings")).toString());
+    } catch (err: any) {
+        userVars = undefined
+    }
+
+    if (!userVars) {
+        userVars = {};
+        (userVars as any)[variable] = value;
+        try {
+            fs.writeFileSync(getUserDBPath(userId, "settings"), JSON.stringify(userVars));
+        } catch(err: any) { 
+            return [false]; 
+        }
+    } else {
+        (userVars as any)[variable] = value;
+        try {
+            fs.writeFileSync(getUserDBPath(userId, "settings"), JSON.stringify(userVars));
+        } catch (err: any) {
+            return [false]
+        }
+    }
+    return [true]
+}
+
 export const loadChatHistory = (userId: string): Array<Content> => {
-    let chat_history: object | null
+    let chat_history: object | undefined
     
     try {
         chat_history = JSON.parse(fs.readFileSync(getUserDBPath(userId)).toString());
     } catch (err: any) {
-        chat_history = null;
+        chat_history = undefined;
     }
 
     if (!chat_history) {
@@ -57,6 +104,7 @@ export const purgeChatHistory = (userId: string): [boolean, any?] => {
     try {
         if (!fs.existsSync(getUserDBPath(userId))) throw new Error("History not found")
         fs.unlinkSync(getUserDBPath(userId));
+        setUserVars(userId, "LAST_CHAT_HISTORY", undefined);
         return [true]
     } catch (err: any) {
         return [false, err]
