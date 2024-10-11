@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, Client, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { chatBot } from "../commons/aiwrapper"
-import { getConfigValue, makeErrorMessage } from "../events/errorHandler";
+import { getConfigValue, logger, makeErrorMessage } from "../events/errorDebugger";
 
 export const komiTalk: Command = {
     name: "talk",
@@ -25,6 +25,7 @@ export const komiTalk: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         let res: string
         let errored: boolean = false;
+        let embedsToSend: EmbedBuilder[] = []
         let shouldEphmeral: boolean = (interaction.options.get("ephmeral")?.value != undefined ? 
             interaction.options.get("ephmeral")?.value : false) as boolean;
 
@@ -45,6 +46,15 @@ export const komiTalk: Command = {
             name: interaction.user.username + " said:"
         })
         .setColor(getConfigValue("EMBED_COLOR"));
-        return await interaction.followUp({embeds: [replyEmbed], content: res, ephemeral: errored || shouldEphmeral});
+
+        let responseEmbed = new EmbedBuilder()
+        .setDescription(res);
+
+        if (res.length > 2000) embedsToSend.push(responseEmbed);
+        embedsToSend.push(replyEmbed);
+
+        logger (`@${interaction.user.username} used talk command [resLength: ${res.length}, promptLength: ${interaction?.options?.get("say")?.value?.toString().length}]`)
+
+        await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: errored || shouldEphmeral}).catch(err => console.log (err));
     }
 }

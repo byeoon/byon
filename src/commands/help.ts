@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionData, ApplicationCommandOptionType, AutocompleteInteraction, BaseApplicationCommandOptionsData, Client, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Command, TranslateApplicationCommandOptionType, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { Commands } from "../commands";
-import { getConfigValue, makeErrorMessage } from "../events/errorHandler";
+import { getConfigValue, makeErrorMessage } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
 
 export const HelpCommand: Command = {

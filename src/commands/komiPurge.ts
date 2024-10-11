@@ -1,7 +1,7 @@
 import { Client, CommandInteraction, InteractionContextType } from "discord.js";
 import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { purgeChatHistory } from "../commons/dbManager";
-import { makeErrorMessage } from "../events/errorHandler";
+import { makeErrorMessage } from "../events/errorDebugger";
 
 export const komiPurge: Command = {
     name: "purge_my_chat_history",

@@ -13,11 +13,11 @@ export const getModel = (user?: User | undefined, debug?: boolean): GenerativeMo
     }
     if (debug) console.log(buffer);
     return genAI.getGenerativeModel({
-        model: "gemini-1.5-pro-exp-0827",
+        model: "gemini-1.5-flash-002",
         generationConfig: {
-            temperature: 0.99,
+            temperature: 0.95,
             candidateCount: 1,
-            maxOutputTokens: 2000
+            maxOutputTokens: 1536
         },
         safetySettings: [
             {

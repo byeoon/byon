@@ -4,7 +4,7 @@ import ready from './events/ready';
 import interactionCreate from './events/interactionCreate';
 import aiwrapper from './commons/aiwrapper';
 import dbManager from './commons/dbManager';
-import errorHandler from './events/errorHandler';
+import errorHandler from './events/errorDebugger';
 
 require("dotenv").config("../.env")
 

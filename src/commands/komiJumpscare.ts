@@ -1,6 +1,6 @@
 import { ApplicationIntegrationType, Client, CommandInteraction, InteractionContextType } from "discord.js"
 import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command"
-import { getConfigValue } from "../events/errorHandler"
+import { getConfigValue } from "../events/errorDebugger"
 
 export const komiJumpscare: Command = {
     name: "jumpscare_me_onegaishimasu",
