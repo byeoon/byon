@@ -95,6 +95,9 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
         history: chatHistory
     }).sendMessage(processedText)).response.text();
 
+    if (response.length <= 1) response = "...";
+    if (processedText.length <= 1) processedText = "...";
+
     appendChatHistory(user.id, [
         {
             role: "user",
