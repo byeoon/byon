@@ -18,23 +18,23 @@ export const shoukoVersion = process.env.npm_package_version
 
 
 const client: Client = new Client({
-    intents: [		
-        GatewayIntentBits.Guilds,
+  intents: [		
+    GatewayIntentBits.Guilds,
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildVoiceStates
-    ],
-    partials: [
-        Partials.Channel,
-        Partials.User
-    ]
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildVoiceStates
+  ],
+  partials: [
+    Partials.Channel,
+    Partials.User
+  ]
 })
 
 ready(client);
 errorHandler(client);
 aiwrapper(client);
 interactionCreate(client);
-dbManager(client);
+dbManager(client, "user_database.db");
 
 client.login(process.env.CLIENT_TOKEN);

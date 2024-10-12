@@ -6,9 +6,9 @@ import { komiPurge } from "./commands/komiPurge";
 import { HelpCommand } from "./commands/help";
 
 export const Commands: Command[] = [
-    komiTalk,
-    komiJumpscare,
-    komiSay,
-    komiPurge,
-    HelpCommand
+  komiTalk,
+  komiJumpscare,
+  komiSay,
+  komiPurge,
+  HelpCommand
 ];

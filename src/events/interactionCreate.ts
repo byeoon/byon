@@ -2,38 +2,38 @@ import { AutocompleteInteraction, Client, CommandInteraction, Interaction, Messa
 import { Commands } from "../commands";
 
 const slashCommandHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
-    const _command = Commands.find(c => c.name === interaction.commandName)
-    if (!_command) {
-        await interaction.reply("Error: `Command not found`");
-        return;
-    } else {
-        try {
-            await _command.run(client, interaction)
-        } catch (err: any) {
-            console.log
-        }
-        return;
+  const _command = Commands.find(c => c.name === interaction.commandName)
+  if (!_command) {
+    await interaction.reply("Error: `Command not found`");
+    return;
+  } else {
+    try {
+      await _command.run(client, interaction)
+    } catch (err: any) {
+      console.log
     }
+    return;
+  }
 }
 
 const commandAutocompleteHandler = async (client: Client, interaction: AutocompleteInteraction): Promise<void> => {
-    const _command = Commands.find(c => c.name === interaction.commandName)
-    if (_command && _command.autocomplete) {
-        try {
-            await _command.autocomplete(client, interaction)
-        } catch (err: any) {
-            console.log
-        }
-        return;
+  const _command = Commands.find(c => c.name === interaction.commandName)
+  if (_command && _command.autocomplete) {
+    try {
+      await _command.autocomplete(client, interaction)
+    } catch (err: any) {
+      console.log
     }
+    return;
+  }
 }
 
 export default (client: Client) => {
-    client.on("interactionCreate", async (interaction: Interaction) => {
-        if (interaction.isCommand()) {
-            await slashCommandHandler(client, interaction);
-        } else if (interaction.isAutocomplete()) {
-            await commandAutocompleteHandler(client, interaction);
-        }
-    })
+  client.on("interactionCreate", async (interaction: Interaction) => {
+    if (interaction.isCommand()) {
+      await slashCommandHandler(client, interaction);
+    } else if (interaction.isAutocomplete()) {
+      await commandAutocompleteHandler(client, interaction);
+    }
+  })
 }
