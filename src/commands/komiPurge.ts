@@ -14,7 +14,7 @@ export const komiPurge: Command = {
     if (!_success) {
       res = makeErrorMessage("Failed to purge, check logs");
     } else {
-      res = "Successfully purged our chat history, goodbye!";
+      res = "Successfully **purged** our chat history, goodbye! ^^";
     }
 
     await interaction.reply({content: res, ephemeral: true})

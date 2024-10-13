@@ -12,14 +12,14 @@ export interface ShoukoConfig {
 
 var config: ShoukoConfig
 
-const unhandledError = (err: any) => console.log
+const unhandledError = (err: any) => logger ("[Unhandled Error] " + err);
 
 export default async (client: Client) => {
   config = JSON.parse(fs.readFileSync("config.json").toString());
 
   if (config.DEBUG) process.env.DEBUG_MODE = "True";
 
-  console.log("Error Handler & Debugger Loaded!")
+  logger("Error Handler & Debugger Loaded!")
 
   process.on("unhandledRejection", unhandledError);
   process.on("uncaughtException", unhandledError);

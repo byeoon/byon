@@ -55,6 +55,6 @@ export const komiTalk: Command = {
 
     logger (`@${interaction.user.username} used talk command [resLength: ${res.length}, promptLength: ${interaction?.options?.get("say")?.value?.toString().length}]`)
 
-    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: errored || shouldEphmeral}).catch(err => console.log (err));
+    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: errored || shouldEphmeral}).catch(err => logger (err));
   }
 }

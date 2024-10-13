@@ -3,6 +3,7 @@ import { Command, TranslateApplicationCommandOptionType, UniversalContextType, U
 import { Commands } from "../commands";
 import { getConfigValue, makeErrorMessage } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
+import { filterEmojis } from "../commons/aiwrapper";
 
 export const HelpCommand: Command = {
   name: 'help',
@@ -52,7 +53,7 @@ export const HelpCommand: Command = {
       } else {
         helpEmbed
         .setTitle("shouko's help page")
-        .setDescription(`Listing **${Commands.length} available commands.**\nMade with **<3** by [specifix](<https://specifix.dev/>)`)
+        .setDescription(`Listing **${Commands.length} available commands.**\nMade with **<3** by [specifix](<https://specifix.dev/>)\n\`\`\\\\//\`\``)
         Commands.map((command: Command) => {
           var commandOptionText: string = "";
           var commandOptionDescriptor: string = "";
@@ -71,7 +72,7 @@ export const HelpCommand: Command = {
     }
 
     await interaction.reply({
-      content: errored ? res : undefined,
+      content: errored ? res : filterEmojis(getConfigValue("HELP_MESSAGES")[Math.floor(Math.random() * getConfigValue("HELP_MESSAGES").length)]),
       embeds: errored ? undefined : [helpEmbed], 
       ephemeral: (interaction.options.get("ephmeral")?.value != undefined ? 
         interaction.options.get("ephmeral")?.value as boolean : 

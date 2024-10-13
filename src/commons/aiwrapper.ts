@@ -2,7 +2,7 @@ import { Client, User } from "discord.js";
 import { Content, GenerativeModel, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import * as fs from "fs";
 import { appendChatHistory, getUserVars, loadChatHistory, setUserVars } from "./dbManager";
-import { getConfigValue } from "../events/errorDebugger";
+import { getConfigValue, logger } from "../events/errorDebugger";
 
 let genAI: GoogleGenerativeAI;
 let model: GenerativeModel;
@@ -42,7 +42,7 @@ export const getModel = async (user?: User | undefined, debug?: boolean): Promis
     buffer = buffer.replace("$USERNAME", user?.username)
     buffer = buffer.replace("$TIMESTAMP",  getRelativeTimeString(lastChatTimestamp))
   }
-  if (debug) console.log(buffer);
+  if (debug) logger (buffer);
   return genAI.getGenerativeModel({
     model: "gemini-1.5-flash-8b",
     generationConfig: {
@@ -77,9 +77,9 @@ export default async (client: Client) => {
     genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
     model = await getModel(undefined, true);
   } catch(err: any) {
-    return console.log(err);
+    return logger (err);
   }
-  return console.log("AIWrapper Loaded!");   
+  return logger ("AIWrapper Loaded!");   
 }
 
 export const filterEmojis = (text: string): string => {
@@ -90,6 +90,8 @@ export const filterEmojis = (text: string): string => {
       modifiedText = modifiedText.replace(emoji, (emojiReplaceList as any)[emoji])
     }
   }
+  modifiedText = modifiedText.replace(/(\p{EPres}|\p{ExtPict})(\u200d(\p{EPres}|\p{ExtPict}))*/gu, "");
+  modifiedText = modifiedText == "" ? "..." : modifiedText;
   return modifiedText;
 }
 

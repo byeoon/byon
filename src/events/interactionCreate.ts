@@ -1,5 +1,6 @@
 import { AutocompleteInteraction, Client, CommandInteraction, Interaction, Message } from "discord.js";
 import { Commands } from "../commands";
+import { logger, makeErrorMessage } from "./errorDebugger";
 
 const slashCommandHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
   const _command = Commands.find(c => c.name === interaction.commandName)
@@ -10,7 +11,12 @@ const slashCommandHandler = async (client: Client, interaction: CommandInteracti
     try {
       await _command.run(client, interaction)
     } catch (err: any) {
-      console.log
+      logger ("[SlashCommands] " + err)
+      if (!interaction.replied) {
+        await interaction.reply({
+          content: makeErrorMessage(err)
+        });
+      }
     }
     return;
   }
@@ -22,7 +28,7 @@ const commandAutocompleteHandler = async (client: Client, interaction: Autocompl
     try {
       await _command.autocomplete(client, interaction)
     } catch (err: any) {
-      console.log
+      logger ("[SlashCommands] " + err)
     }
     return;
   }

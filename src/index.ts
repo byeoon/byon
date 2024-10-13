@@ -4,9 +4,9 @@ import ready from './events/ready';
 import interactionCreate from './events/interactionCreate';
 import aiwrapper from './commons/aiwrapper';
 import dbManager from './commons/dbManager';
-import errorHandler from './events/errorDebugger';
+import errorHandler, { logger } from './events/errorDebugger';
 
-require("dotenv").config("../.env")
+require("dotenv").config("../.env");
 
 console.log("Loading ShoukoV2, attempting to connect to discord gateway");
 
@@ -37,4 +37,4 @@ aiwrapper(client);
 interactionCreate(client);
 dbManager(client, "user_database.db");
 
-client.login(process.env.CLIENT_TOKEN);
+client.login(process.env.CLIENT_TOKEN).catch(err => logger("Unable to log in: " + err));
