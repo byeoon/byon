@@ -33,7 +33,7 @@ const splitMessagesIntoChunks = (array: Array<string>, chunkSize: number): Array
 const createHistoryMessage = async (contents: Array<string>, interaction: CommandInteraction, currentPage: number, maxPages: number): Promise<Message<boolean>> => {
   const historyEmbed = new EmbedBuilder()
   .setTitle(`chat history [showing ${currentPage + 1}/${maxPages}]`)
-  .setDescription("```prolog\n" + (contents.length > 0 ? contents.join("\n") : "No Chat History Recorded") + "```")
+  .setDescription("(displayed in a descending order)\n```prolog\n" + (contents.length > 0 ? contents.join("\n") : "No Chat History Recorded") + "```")
   .setColor(getConfigValue("EMBED_COLOR"))
   .setFooter({
     text: 'shouko v' + shoukoVersion
