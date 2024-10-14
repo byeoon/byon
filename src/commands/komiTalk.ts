@@ -53,8 +53,6 @@ export const komiTalk: Command = {
     if (res.length > 2000) embedsToSend.push(responseEmbed);
     embedsToSend.push(replyEmbed);
 
-    logger (`@${interaction.user.username} used talk command [resLength: ${res.length}, promptLength: ${interaction?.options?.get("say")?.value?.toString().length}]`)
-
     await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: errored || shouldEphmeral}).catch(err => logger (err));
   }
 }

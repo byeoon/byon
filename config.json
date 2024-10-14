@@ -1,6 +1,11 @@
 {
   "EMBED_COLOR": "#454090",
   "CACHE_TTL": 600,
+  "WHITELISTED_USERS": [
+    "485749822322769920",
+    "744912373844017152",
+    "514986731263492096"
+  ],
   "ERROR_MESSAGES": [
     "Uhhhh, something has gone wrong!!!! sorry!!",
     "I've caught an error!!",

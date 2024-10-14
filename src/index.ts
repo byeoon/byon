@@ -5,6 +5,7 @@ import interactionCreate from './events/interactionCreate';
 import aiwrapper from './commons/aiwrapper';
 import dbManager from './commons/dbManager';
 import errorHandler, { logger } from './events/errorDebugger';
+import messageCreate from './events/messageCreate';
 
 require("dotenv").config("../.env");
 
@@ -21,9 +22,8 @@ const client: Client = new Client({
   intents: [		
     GatewayIntentBits.Guilds,
 		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildVoiceStates
+    GatewayIntentBits.DirectMessages
   ],
   partials: [
     Partials.Channel,
@@ -35,6 +35,7 @@ ready(client);
 errorHandler(client);
 aiwrapper(client);
 interactionCreate(client);
+messageCreate(client);
 dbManager(client, "user_database.db");
 
 client.login(process.env.CLIENT_TOKEN).catch(err => logger("Unable to log in: " + err));

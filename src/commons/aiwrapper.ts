@@ -109,6 +109,8 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
     history: chatHistory
   }).sendMessage(processedText)).response.text();
 
+  logger (`@${user.username} queried shouko talk [resLength: ${response.length}, promptLength: ${text.length}]`)
+
   if (response.length <= 1) response = "...";
   if (processedText.length <= 1) processedText = "...";
 
