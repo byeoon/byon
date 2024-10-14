@@ -29,7 +29,7 @@ const respond = async (message: Message<boolean>) => {
 
 export default async (client: Client) => {
   client.on("messageCreate", async (message: Message<boolean>) => {
-    if (message.author.id === client.user!.id)
+    if (message.author.id === client.user!.id) return 
     switch(message.channel.type) {
       case ChannelType.DM:
         if ((getConfigValue("WHITELISTED_USERS") as Array<string>).includes(message.author.id)) {
