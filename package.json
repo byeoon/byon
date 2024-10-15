@@ -1,6 +1,6 @@
 {
   "name": "shouko-san",
-  "version": "0.0.8-alpha",
+  "version": "0.0.9-alpha",
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
