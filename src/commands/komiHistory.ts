@@ -5,6 +5,7 @@ import { Content } from "@google/generative-ai";
 import { getConfigValue } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
 import { filterEmojis } from "../commons/aiwrapper";
+import { splitArrayIntoChunks } from "../commons/utils";
 
 export const truncateString = (str: string, maxLength: number): string => {
   if (str.length > maxLength) {
@@ -20,14 +21,6 @@ const sanitizer = (text: string): string => {
   .replace(/( [\s]+|[\s]+$)+/g, " ")
   .replace(":3", ":>")
   .trim(), 105);
-}
-
-const splitMessagesIntoChunks = (array: Array<string>, chunkSize: number): Array<Array<string>> => {
-  const result: Array<Array<string>> = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
 }
 
 const createHistoryMessage = async (contents: Array<string>, interaction: CommandInteraction, currentPage: number, maxPages: number): Promise<Message<boolean>> => {
@@ -64,7 +57,7 @@ const createHistoryMessage = async (contents: Array<string>, interaction: Comman
 }
 
 export const komiHistory: Command = {
-  name: "show_my_chat_history",
+  name: "show_chat_history",
   description: "Shows your previous messages with shouko in a (decent) formatted list.",
   options: [
     {
@@ -87,7 +80,7 @@ export const komiHistory: Command = {
         sanitizer(Content.parts[0].text!.toLowerCase())
     }`);
 
-    let pages = splitMessagesIntoChunks(contents, 10);
+    let pages = splitArrayIntoChunks(contents, 10);
     let currentPage: number = 0;
 
     const response = await createHistoryMessage(pages[0] ?? [], interaction, currentPage, pages.length <= 0 ? 1 : pages.length);

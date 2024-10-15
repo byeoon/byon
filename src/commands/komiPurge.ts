@@ -4,7 +4,7 @@ import { purgeChatHistory } from "../commons/dbManager";
 import { makeErrorMessage } from "../events/errorDebugger";
 
 export const komiPurge: Command = {
-  name: "purge_my_chat_history",
+  name: "purge_chat_history",
   description: "Makes shouko forget you.. No, really..",
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,

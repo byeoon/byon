@@ -1,9 +1,18 @@
-import { ApplicationIntegrationType, AutocompleteInteraction, ChatInputApplicationCommandData, Client, CommandInteraction, IntegrationType, InteractionContextType, Message, MessageReplyOptions } from "discord.js";
+import { ApplicationIntegrationType, AutocompleteInteraction, ChatInputApplicationCommandData, Client, CommandInteraction, IntegrationType, InteractionContextType, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageReplyOptions, UserApplicationCommandData, UserContextMenuCommandInteraction } from "discord.js";
 
 export interface Command extends ChatInputApplicationCommandData {
   run: (client: Client, interaction: CommandInteraction) => void,
   autocomplete?: (client: Client, interaction: AutocompleteInteraction) => void
 }
+
+export interface UserCommand extends UserApplicationCommandData {
+  run: (client: Client, interaction: UserContextMenuCommandInteraction) => void
+}
+
+export interface MessageCommand extends MessageApplicationCommandData {
+  run: (client: Client, interaction: MessageContextMenuCommandInteraction) => void
+}
+
 export const UniversalContextType: InteractionContextType[] = [
   InteractionContextType.BotDM,
   InteractionContextType.Guild,

@@ -2,7 +2,7 @@ import { ApplicationIntegrationType, InteractionContextType, ApplicationCommandO
 import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command"
 
 export const komiSay: Command = {
-  name: "shouko_says_that",
+  name: "shouko_says",
   description: "Make shouko say something! she'll say it!!",
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
