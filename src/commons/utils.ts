@@ -1,6 +1,7 @@
-import { User } from "discord.js";
+import { GuildMember, User } from "discord.js";
 
-export const getUsername = (user: User): string => {
+export const getUsername = (user: User | GuildMember): string => {
+  if (user instanceof GuildMember) user = user.user;
   if (user.tag.endsWith("#0000")) return user.username;
   return user.tag;
 }
