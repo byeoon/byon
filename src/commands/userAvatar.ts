@@ -1,19 +1,20 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction, EmbedBuilder, GuildMember, InteractionContextType, User, UserContextMenuCommandInteraction } from "discord.js";
-import { Command, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
-import { getConfigValue } from "../events/errorDebugger";
+import { ApplicationCommandOptionType, ApplicationCommandType, ApplicationIntegrationType, Client, EmbedBuilder, GuildMember, InteractionContextType, User } from "discord.js";
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
+import { getConfigValue, logger } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
 import { getUsername } from "../commons/utils";
 
-const generateMessage = async (interaction: CommandInteraction | UserContextMenuCommandInteraction, _guildProfile?: boolean) => {
+const generateMessage = async (_client: Client, interaction: ShoukoHybridCommand) => {
   let target: User | GuildMember;
-  let guildProfile: boolean;
-  if (interaction instanceof UserContextMenuCommandInteraction) {
-    target = interaction.targetUser;
-    guildProfile = _guildProfile ?? interaction.options.get("server_profile")?.value as boolean;
-    if (guildProfile) target = interaction.targetMember as GuildMember;
-  } else {
-    target = interaction.options.get("user")?.user || interaction.user;
+  let guildProfile: boolean = (interaction.inGuild() && interaction.getOption<boolean>("guild")) || (interaction.inGuild() && interaction.isUserContextMenu()) || false;
+  target = await interaction.getOption<Promise<User>>("user") || interaction.targetUser || interaction.user;
+  try {
+    if (guildProfile) target = await interaction.guild!.members.fetch(target.id)!;
+  } catch(err: any) {
+    logger ('[SlashCommands/UserAvatar] ' + err);
+    throw new Error("No member found or must be in a guild to use this command.")
   }
+
 
   let avatarURL = target.displayAvatarURL({
     size: 4096,
@@ -30,13 +31,14 @@ const generateMessage = async (interaction: CommandInteraction | UserContextMenu
 
   await interaction.reply({
     embeds: [avatarEmbed],
-    ephemeral: interaction.options.get("ephmeral")?.value as boolean ?? false
+    ephemeral: interaction.getOption<boolean>("ephmeral") ?? false
   });
 }
 
 export const userAvatar: Command = {
   name: "avatar",
-  description: "View a user's avatar and (optionally) their guild avatar",
+  description: "Get a user's avatar and (optionally) their guild avatar",
+  category: ShoukoCommandCategory.General,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
   options: [
@@ -47,7 +49,7 @@ export const userAvatar: Command = {
       required: false
     },
     {
-      name: "server_profile",
+      name: "guild",
       type: ApplicationCommandOptionType.Boolean,
       description: "Show user profile or guild profile?"
     }, 
@@ -58,27 +60,21 @@ export const userAvatar: Command = {
       required: false
     }
   ],
-  run: async (client: Client, interaction: CommandInteraction) => {
-    await generateMessage(interaction);
-  }
+  run: generateMessage
 }
 
 export const userAvatarContext: UserCommand = {
-  name: "View User Avatar",
+  name: "View Avatar",
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
   type: ApplicationCommandType.User,
-  run: async (client: Client, interaction: UserContextMenuCommandInteraction) => {
-    await generateMessage(interaction, false);
-  }
+  run: generateMessage
 }
 
 export const guildAvatarContext: UserCommand = {
   name: "View Server Avatar",
   contexts: [InteractionContextType.Guild],
-  integrationTypes: UniversalIntegrationType,
+  integrationTypes: [ApplicationIntegrationType.GuildInstall],
   type: ApplicationCommandType.User,
-  run: async (client: Client, interaction: UserContextMenuCommandInteraction) => {
-    await generateMessage(interaction, true);
-  }
+  run: generateMessage
 }

@@ -1,11 +1,12 @@
-import { ApplicationCommandOptionType, Client, CommandInteraction, EmbedBuilder } from "discord.js";
-import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command";
+import { ApplicationCommandOptionType, Client, EmbedBuilder } from "discord.js";
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { chatBot } from "../commons/aiwrapper"
-import { getConfigValue, logger, makeErrorMessage } from "../events/errorDebugger";
+import { getConfigValue, logger } from "../events/errorDebugger";
 
 export const komiTalk: Command = {
   name: "talk",
   description: "Talk with shouko, she's a little lonely around here..",
+  category: ShoukoCommandCategory.Shouko,
   options: [
     {
       name: "say",
@@ -22,23 +23,16 @@ export const komiTalk: Command = {
   ],
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (_client: Client, interaction: ShoukoHybridCommand) => {
     let res: string
-    let errored: boolean = false;
     let embedsToSend: EmbedBuilder[] = []
-    let shouldEphmeral: boolean = (interaction.options.get("ephmeral")?.value != undefined ? 
-      interaction.options.get("ephmeral")?.value : false) as boolean;
+    let shouldEphmeral: boolean = interaction.getOption<boolean>("ephmeral") || false;
 
     await interaction.deferReply({ephemeral: shouldEphmeral});
-    try {
-      res = await chatBot(interaction.options.get("say", true).value as string, interaction.user);
-    } catch (err: any) {
-      errored = true;
-      res = makeErrorMessage(err);
-    }
+    res = await chatBot(interaction.getOption<string>("say")!, interaction.user);
 
     let replyEmbed = new EmbedBuilder()
-    .setDescription(interaction.options.get("say", true).value as string)
+    .setDescription(interaction.getOption<string>("say")!)
     .setAuthor({
       iconURL: interaction.user.avatarURL({
         size: 128
@@ -53,6 +47,6 @@ export const komiTalk: Command = {
     if (res.length > 2000) embedsToSend.push(responseEmbed);
     embedsToSend.push(replyEmbed);
 
-    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: errored || shouldEphmeral}).catch(err => logger (err));
+    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: shouldEphmeral}).catch(err => logger (err));
   }
 }

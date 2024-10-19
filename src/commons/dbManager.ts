@@ -26,7 +26,7 @@ let sequelize: Sequelize;
 let shoukoCache: NodeCache;
 let isDebugging = false;
 
-export default async (client: Client, storage: string) => {
+export default async (_client: Client, storage: string) => {
   isDebugging = process.env.DEBUG_MODE?.toLowerCase() === "true";
   sequelize = new Sequelize({
     dialect: 'sqlite',

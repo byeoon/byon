@@ -1,6 +1,9 @@
-import { ChannelType, Client, EmbedBuilder, Message, TextChannel } from "discord.js";
+import { ApplicationCommandOptionData, ChannelType, Client, EmbedBuilder, Message, TextChannel } from "discord.js";
 import { chatBot } from "../commons/aiwrapper";
-import { getConfigValue, makeErrorMessage } from "./errorDebugger";
+import { getConfigValue, logger, makeErrorMessage } from "./errorDebugger";
+import { Commands } from "../commands";
+import { ShoukoHybridCommand } from "../commons/command";
+import { prefix } from "..";
 
 const respond = async (message: Message<boolean>) => {
   let res: string;
@@ -41,6 +44,26 @@ export default async (client: Client) => {
           await respond(message);
         }
       break;
+    }
+
+    if (message.cleanContent.startsWith(prefix)) {
+      let interaction = new ShoukoHybridCommand(client, message, [])
+      const _command = Commands.find(c => c.name === interaction.commandName)
+      if (!_command) {
+        await interaction.reply({ content: "Error: `Command not found`" });
+        return;
+      } else {
+        try {
+          let interaction = new ShoukoHybridCommand(client, message, _command.options as ApplicationCommandOptionData[])
+          await _command.run(client, interaction)
+        } catch (err: any) {
+          logger ("[SlashCommands] " + err)
+          await interaction.reply({
+            content: makeErrorMessage(err)
+          })
+        }
+        return;
+      }
     }
   })
 }

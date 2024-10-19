@@ -1,14 +1,15 @@
-import { Client, CommandInteraction, InteractionContextType } from "discord.js";
-import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command";
+import { Client, CommandInteraction } from "discord.js";
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { purgeChatHistory } from "../commons/dbManager";
 import { makeErrorMessage } from "../events/errorDebugger";
 
 export const komiPurge: Command = {
-  name: "purge_chat_history",
+  name: "historypurge",
   description: "Makes shouko forget you.. No, really..",
+  category: ShoukoCommandCategory.Shouko,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (_client: Client, interaction: CommandInteraction | ShoukoHybridCommand) => {
     let res: string
     let _success = await purgeChatHistory(interaction.user.id);
     if (!_success) {

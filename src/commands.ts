@@ -6,6 +6,8 @@ import { komiPurge } from "./commands/komiPurge";
 import { HelpCommand } from "./commands/help";
 import { komiHistory } from "./commands/komiHistory";
 import { guildAvatarContext, userAvatar, userAvatarContext } from "./commands/userAvatar";
+import { userBanner, userBannerContext } from "./commands/userBanner";
+import { userProfile, userProfileContext } from "./commands/userProfile";
 
 export const Commands: Command[] = [
   komiTalk,
@@ -14,12 +16,16 @@ export const Commands: Command[] = [
   komiPurge,
   HelpCommand,
   komiHistory,
-  userAvatar
+  userAvatar,
+  userBanner,
+  userProfile
 ];
 
 export const UserCommands: UserCommand[] = [
   userAvatarContext,
-  guildAvatarContext
+  guildAvatarContext,
+  userBannerContext,
+  userProfileContext
 ]
 
 export const MessageCommands: MessageCommand[] = []

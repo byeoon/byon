@@ -1,6 +1,20 @@
-import { AutocompleteInteraction, Client, CommandInteraction, Interaction, Message, UserContextMenuCommandInteraction } from "discord.js";
+import { ApplicationCommandOptionData, AutocompleteInteraction, Client, CommandInteraction, Interaction, UserContextMenuCommandInteraction } from "discord.js";
 import { Commands, UserCommands } from "../commands";
 import { logger, makeErrorMessage } from "./errorDebugger";
+import { ShoukoHybridCommand } from "../commons/command";
+
+export const interactionErrorHandler = async (interaction: CommandInteraction | UserContextMenuCommandInteraction, err: any) => {
+  if (interaction.replied) {
+    await interaction.followUp({
+      content: makeErrorMessage(err)
+    });
+  } else {
+    await interaction.reply({
+      content: makeErrorMessage(err),
+      ephemeral: true
+    });
+  }
+}
 
 const slashCommandHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
   const _command = Commands.find(c => c.name === interaction.commandName)
@@ -9,14 +23,10 @@ const slashCommandHandler = async (client: Client, interaction: CommandInteracti
     return;
   } else {
     try {
-      await _command.run(client, interaction)
+      await _command.run(client, new ShoukoHybridCommand(client, interaction, _command.options as ApplicationCommandOptionData[]))
     } catch (err: any) {
       logger ("[SlashCommands] " + err)
-      if (!interaction.replied) {
-        await interaction.reply({
-          content: makeErrorMessage(err)
-        });
-      }
+      await interactionErrorHandler(interaction, err);
     }
     return;
   }
@@ -38,9 +48,10 @@ const commandUserContextHandler = async (client: Client, interaction: UserContex
   const _command = UserCommands.find(c => c.name === interaction.commandName)
   if (_command) {
     try {
-      await _command.run(client, interaction)
+      await _command.run(client, new ShoukoHybridCommand(client, interaction, []));
     } catch (err: any) {
       logger ("[UserCommands] " + err)
+      await interactionErrorHandler(interaction, err);
     }
     return;
   }

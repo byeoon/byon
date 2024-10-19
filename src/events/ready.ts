@@ -1,6 +1,13 @@
-import { ActivityType, Client, OAuth2Guild } from 'discord.js'
+import { ActivityType, Client } from 'discord.js'
 import { Commands, MessageCommands, UserCommands } from '../commands';
 import { logger } from './errorDebugger';
+
+const presenceRefresh = async (client: Client) => {
+  client.user?.setPresence({
+    activities: [{"name": "haii :3 • s.help", type: ActivityType.Custom}],
+    status: "online"
+  })
+}
 
 export default (client: Client): void => {
   client.once('ready', async (client: Client) => {
@@ -14,9 +21,7 @@ export default (client: Client): void => {
     logger ("Guilds (" + guilds.length + "): " + guilds.map(g => g.name).join(", "))
     logger ("Total approx installed users: " + client.application?.approximateUserInstallCount?.toString())
 
-    client.user.setPresence({
-      activities: [{"name": "haii :3", type: ActivityType.Custom}],
-      status: "online"
-    })
+    await presenceRefresh(client);
+    setInterval(async () => await presenceRefresh(client), 60_000)
   });
 }

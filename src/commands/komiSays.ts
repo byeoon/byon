@@ -1,9 +1,10 @@
-import { ApplicationIntegrationType, InteractionContextType, ApplicationCommandOptionType, Client, CommandInteraction } from "discord.js"
-import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command"
+import { ApplicationCommandOptionType, Client } from "discord.js"
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command"
 
 export const komiSay: Command = {
-  name: "shouko_says",
+  name: "shoukosays",
   description: "Make shouko say something! she'll say it!!",
+  category: ShoukoCommandCategory.Misc,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
   options: [
@@ -14,9 +15,9 @@ export const komiSay: Command = {
       required: true
     }
   ],
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (_client: Client, interaction: ShoukoHybridCommand) => { 
     await interaction.reply({
-      content: interaction.options.get("text")?.value?.toString() || "waawawawa"
+      content: interaction.getOption<string>("text")?.toString() || "waawawawa"
     })
   }
 }

@@ -72,7 +72,7 @@ export const getModel = async (user?: User | undefined, debug?: boolean): Promis
   });
 }
 
-export default async (client: Client) => {
+export default async (_client: Client) => {
   try {
     genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
     model = await getModel(undefined, true);

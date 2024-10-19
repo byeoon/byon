@@ -1,5 +1,5 @@
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, Client, CommandInteraction, ComponentType, EmbedBuilder, InteractionCollector, InteractionResponse, Message, MessageComponentInteraction } from "discord.js";
-import { Command, UniversalContextType, UniversalIntegrationType } from "../commons/command";
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, Client, ComponentType, EmbedBuilder, Message, MessageComponentInteraction } from "discord.js";
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { loadChatHistory } from "../commons/dbManager";
 import { Content } from "@google/generative-ai";
 import { getConfigValue } from "../events/errorDebugger";
@@ -23,7 +23,7 @@ const sanitizer = (text: string): string => {
   .trim(), 105);
 }
 
-const createHistoryMessage = async (contents: Array<string>, interaction: CommandInteraction, currentPage: number, maxPages: number): Promise<Message<boolean>> => {
+const createHistoryMessage = async (contents: Array<string>, interaction: ShoukoHybridCommand, currentPage: number, maxPages: number): Promise<Message<boolean>> => {
   const historyEmbed = new EmbedBuilder()
   .setTitle(`chat history [showing ${currentPage + 1}/${maxPages}]`)
   .setDescription("(displayed in a descending order)\n```prolog\n" + (contents.length > 0 ? contents.join("\n") : "No Chat History Recorded") + "```")
@@ -57,8 +57,9 @@ const createHistoryMessage = async (contents: Array<string>, interaction: Comman
 }
 
 export const komiHistory: Command = {
-  name: "show_chat_history",
+  name: "historyshow",
   description: "Shows your previous messages with shouko in a (decent) formatted list.",
+  category: ShoukoCommandCategory.Shouko,
   options: [
     {
       name: "no_ephmeral",
@@ -68,12 +69,12 @@ export const komiHistory: Command = {
   ],
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
-  run: async (client: Client, interaction: CommandInteraction) => {
-    await interaction.deferReply({ ephemeral: !interaction.options.get("no_ephmeral")?.value});
+  run: async (_client: Client, interaction: ShoukoHybridCommand) => {
+    await interaction.deferReply({ ephemeral: !interaction.getOption<boolean>("no_ephmeral")});
     let chatHistory = await loadChatHistory(interaction.user.id);
     let rChatHistory = chatHistory.slice().reverse();
 
-    let contents = rChatHistory.map((Content: Content, index: number) => 
+    let contents = rChatHistory.map((Content: Content) => 
       `${
         Content.role.replace("user", "You   ").replace("model", "Shouko")
     } ${

@@ -73,5 +73,58 @@
     "😭": "<:catcry:1295023839406985257>",
 
     "👌": "<:catokay:1295023983090991136>"
+  },
+  "BADGES_LIST": {
+    "Staff": {
+      "emoji": "<:badge_staff:1296834088652771419>",
+      "url": "https://support.discord.com/hc/en-us/articles/360035962891-Profile-Badges-101"
+    },
+    "Partner": {
+      "emoji": "<:badge_partner:1296834359424454717>",
+      "url": "https://discord.com/partners"
+    },
+    "Hypesquad": {
+      "emoji": "<:badge_hypesquad:1296834312473411666>",
+      "url": "https://discord.com/settings/hypesquad-online"
+    },
+    "HypeSquadOnlineHouse1": {
+      "emoji": "<:badge_hypesquadbravery:1296834550458220698>",
+      "url": "https://discord.com/settings/hypesquad-online"
+    },
+    "HypeSquadOnlineHouse2": {
+      "emoji": "<:badge_hypesquadbrilliance:1296834606401589319>",
+      "url": "https://discord.com/settings/hypesquad-online"
+    },
+    "HypeSquadOnlineHouse3": {
+      "emoji": "<:badge_hypesquadbalance:1296834642866868255>",
+      "url": "https://discord.com/settings/hypesquad-online"
+    },
+    "BugHunterLevel1": {
+      "emoji": "<:badge_bughunter1:1296834178553352272>",
+      "url": "https://support.discord.com/hc/en-us/articles/360046057772-Discord-Bugs"
+    },
+    "BugHunterLevel2": {
+      "emoji": "<:badge_bughunter2:1296834229845491792>",
+      "url": "https://support.discord.com/hc/en-us/articles/360046057772-Discord-Bugs"
+    },
+    "VerifiedDeveloper": {
+      "emoji": "<:badge_earlydev:1296834468375560222>"
+    },
+    "CertifiedModerator": {
+      "emoji": "<:badge_moderatoralumni:1296834423664283788>",
+      "url": "https://discord.com/safety-library"
+    },
+    "ActiveDeveloper": {
+      "emoji": "<:badge_activedev:1296834503758581781>",
+      "url": "https://support-dev.discord.com/hc/en-us/articles/10113997751447-Active-Developer-Badge"
+    },
+    "PremiumEarlySupporter": {
+      "emoji": "<:badge_earlysupporter:1296834267921383597>",
+      "url": "https://support.discord.com/hc/en-us/articles/360017949691-Legacy-Nitro-Classic-FAQ"
+    },
+    "Nitro": {
+      "emoji": "<:badge_nitro:1296834146798276708>",
+      "url": "https://discord.com/nitro"
+    }
   }
 }
