@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction, EmbedBuilder, User } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, EmbedBuilder, User } from "discord.js";
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
 import { getConfigValue } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
@@ -60,10 +60,7 @@ export const userBanner: Command = {
       required: false
     }
   ],
-  run: async (client: Client, interaction: CommandInteraction | ShoukoHybridCommand) => {
-    
-    await generateMessage (client, interaction as ShoukoHybridCommand)
-  }
+  run: generateMessage
 }
 
 export const userBannerContext: UserCommand = {
