@@ -18,7 +18,7 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
 
   await interaction.reply({
     embeds: [profileEmbed],
-    ephemeral: true
+    ephemeral: interaction.getOption<boolean>("ephmeral") || false
   });
 }
 
