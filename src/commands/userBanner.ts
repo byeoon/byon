@@ -8,9 +8,7 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
   let target: User;
   target = await interaction.getOption<Promise<User>>("user") || interaction.targetUser || interaction.user;
 
-  target = await client.users.fetch(target.id, {
-    force: true
-  });
+  target = await client.users.fetch(target);
 
 
   let bannerURL = target.bannerURL({

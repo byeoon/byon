@@ -6,6 +6,9 @@
     "744912373844017152",
     "514986731263492096"
   ],
+  "DEV_USERS": [
+    "485749822322769920"
+  ],
   "ERROR_MESSAGES": [
     "Uhhhh, something has gone wrong!!!! sorry!!",
     "I've caught an error!!",
@@ -125,6 +128,17 @@
     "Nitro": {
       "emoji": "<:badge_nitro:1296834146798276708>",
       "url": "https://discord.com/nitro"
+    },
+    "Bot": {
+      "emoji": "<:app_left:1297463141663379499><:app_right:1297463152904245248>",
+      "url": "https://discord.com/developers/docs/intro"
+    },
+    "Komi": {
+      "emoji": " <:shouko:1297466331691483197>"
+    },
+    "Specifix": {
+      "emoji": "<:spec_miku:1297464705132269601> ",
+      "url": "https://specifix.dev/"
     }
   }
 }

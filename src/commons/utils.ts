@@ -5,9 +5,11 @@ import { restClient } from "..";
 import NodeCache from "node-cache";
 
 let rawUserCache: NodeCache;
+let _client: Client;
 
-export default (_client: Client) => {
+export default (client: Client) => {
   rawUserCache = new NodeCache();
+  _client = client;
 }
 
 export const getUsername = (user: User | GuildMember): string => {
@@ -16,11 +18,36 @@ export const getUsername = (user: User | GuildMember): string => {
   return user.tag;
 }
 
+export const getClan = async (user: User): Promise<{ tag: string }> => {
+  let rawUser = await getRawUser(_client, user);
+  console.log((rawUser as any).clan);
+  return (rawUser as any).clan;
+}
+
 export const getUserBadgesEmojis = async (user: User, withLink?: boolean): Promise<Array<string>> => {
   let badges: Array<string> = [];
 
   // Check if user is bot
-  if (user.bot) return [];
+  if (user.bot) {
+    let badge = "Bot";
+    badges.push(withLink && getConfigValue("BADGES_LIST")[badge].url 
+      ? `[${getConfigValue("BADGES_LIST")[badge].emoji}](${getConfigValue("BADGES_LIST")[badge].url})` 
+      : getConfigValue("BADGES_LIST")[badge].emoji);
+
+    if (user.id === _client.user?.id) {
+      badge = "Komi";
+      badges.push(withLink && getConfigValue("BADGES_LIST")[badge].url 
+        ? `[${getConfigValue("BADGES_LIST")[badge].emoji}](${getConfigValue("BADGES_LIST")[badge].url})` 
+        : getConfigValue("BADGES_LIST")[badge].emoji);
+    }
+
+    return badges;
+  } else if ((getConfigValue("DEV_USERS") as Array<string>).includes(user.id)) {
+    let badge = "Specifix";
+    badges.push(withLink && getConfigValue("BADGES_LIST")[badge].url 
+      ? `[${getConfigValue("BADGES_LIST")[badge].emoji}](${getConfigValue("BADGES_LIST")[badge].url})` 
+      : getConfigValue("BADGES_LIST")[badge].emoji);
+  }
 
   (await user.fetchFlags(true)).toArray().map(badge => {
     if (getConfigValue("BADGES_LIST")[badge]) {
