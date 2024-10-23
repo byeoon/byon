@@ -5,10 +5,12 @@ import { restClient } from "..";
 import NodeCache from "node-cache";
 
 let rawUserCache: NodeCache;
+let rawMemberCache: NodeCache;
 let _client: Client;
 
 export default (client: Client) => {
   rawUserCache = new NodeCache();
+  rawMemberCache = new NodeCache();
   _client = client;
 }
 
@@ -20,7 +22,7 @@ export const getUsername = (user: User | GuildMember): string => {
 
 export const getClan = async (user: User): Promise<{ tag: string }> => {
   let rawUser = await getRawUser(_client, user);
-  console.log((rawUser as any).clan);
+  //console.log((rawUser as any).clan);
   return (rawUser as any).clan;
 }
 
@@ -73,11 +75,24 @@ export interface RawUserOptions {
 
 export const getRawUser = async (_client: Client, user: User, options?: RawUserOptions): Promise<RawUserData | undefined> => {
   if(!rawUserCache.has(user.id) || options?.force) {
-    let rawUser: RawUserData = await restClient.get(Routes.user(user.id)) as RawUserData;
+    let rawUser = await restClient.get(Routes.user(user.id)) as RawUserData;
     rawUserCache.set(user.id, rawUser, getConfigValue("CACHE_TTL"));
     return rawUser;
   } 
   return rawUserCache.get<RawUserData>(user.id);
+}
+
+export interface RawMemberData extends Partial<GuildMember> {
+  banner?: string
+}
+
+export const getRawMember = async (_client: Client, member: GuildMember, options?: RawUserOptions): Promise<RawMemberData | undefined> => {
+  if(!rawMemberCache.has(member.id) || options?.force) {
+    let rawMember = await restClient.get(Routes.guildMember(member.guild.id, member.id)) as RawMemberData;
+    rawMemberCache.set(member.id, rawMember, getConfigValue("CACHE_TTL"));
+    return rawMember;
+  } 
+  return rawMemberCache.get<RawMemberData>(member.id);
 }
 
 export const splitArrayIntoChunks = (array: Array<any>, chunkSize: number): Array<Array<any>> => {

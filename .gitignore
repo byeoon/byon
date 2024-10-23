@@ -1,4 +1,6 @@
 user_database.db
+src/commands/indexer.ts
+indexer.json
 
 .env
 # Logs

@@ -4,7 +4,7 @@ import { logger, makeErrorMessage } from "./errorDebugger";
 import { ShoukoHybridCommand } from "../commons/command";
 
 export const interactionErrorHandler = async (interaction: CommandInteraction | UserContextMenuCommandInteraction, err: any) => {
-  if (interaction.replied) {
+  if (interaction.replied || interaction.deferred) {
     await interaction.followUp({
       content: makeErrorMessage(err)
     });

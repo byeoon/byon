@@ -1,20 +1,28 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, EmbedBuilder, User } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, EmbedBuilder, GuildMember, User } from "discord.js";
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
 import { getConfigValue } from "../events/errorDebugger";
 import { shoukoVersion } from "..";
-import { getUsername } from "../commons/utils";
+import { getRawMember, getUsername, RawMemberData } from "../commons/utils";
 
 const generateMessage = async (client: Client, interaction: ShoukoHybridCommand) => {
   let target: User;
   target = await interaction.getOption<Promise<User>>("user") || interaction.targetUser || interaction.user;
 
-  target = await client.users.fetch(target);
-
+  target = await client.users.fetch(target.id, {force: true});
 
   let bannerURL = target.bannerURL({
     size: 4096,
     forceStatic: false
-  }) as string | null
+  }) || null
+
+  if (!interaction.getOption<boolean>("guild") && interaction.inGuild()) {
+    let targetMember: GuildMember | undefined = await interaction.guild?.members.fetch(target);
+    if (targetMember) {
+      let rawTargetMember: RawMemberData | undefined = await getRawMember(client, targetMember);
+      bannerURL = rawTargetMember && rawTargetMember.banner ? bannerURL = `https://cdn.discordapp.com/guilds/${interaction.guild?.id}/users/${targetMember.id}/banners/${rawTargetMember.banner}${rawTargetMember.banner.startsWith("a_") ? ".gif" : ".webp"}?size=4096&dynamic=true` : bannerURL;
+    }
+  }
+
   let bannerEmbed = new EmbedBuilder()
   .setTitle(`${getUsername(target)}'s banner`)
   .setImage(bannerURL)
@@ -51,6 +59,11 @@ export const userBanner: Command = {
       description: "The user to fetch",
       required: false
     },
+    {
+      name: "guild",
+      type: ApplicationCommandOptionType.Boolean,
+      description: "Show user profile or guild profile?"
+    }, 
     {
       name: "ephmeral",
       type: ApplicationCommandOptionType.Boolean,
