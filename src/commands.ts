@@ -8,7 +8,6 @@ import { komiHistory } from "./commands/komiHistory";
 import { guildAvatarContext, userAvatar, userAvatarContext } from "./commands/userAvatar";
 import { userBanner, userBannerContext } from "./commands/userBanner";
 import { userProfile, userProfileContext } from "./commands/userProfile";
-import { indexer } from "./commands/indexer";
 
 export const Commands: Command[] = [
   komiTalk,
@@ -19,8 +18,7 @@ export const Commands: Command[] = [
   komiHistory,
   userAvatar,
   userBanner,
-  userProfile,
-  indexer
+  userProfile
 ];
 
 export const UserCommands: UserCommand[] = [
