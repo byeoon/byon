@@ -101,7 +101,7 @@ export class ShoukoHybridCommand {
 
   // Type guard to check if context is a Message
   private isMessage(context: Message | CommandInteraction): context is Message {
-    return (context as Message).channel !== undefined;
+    return (context as Message).author !== undefined;
   }
 
   // Type guard for interaction

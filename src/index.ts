@@ -38,7 +38,7 @@ errorHandler(client);
 aiwrapper(client);
 interactionCreate(client);
 messageCreate(client);
-dbManager(client, "user_database.db");
+dbManager(client, "shoukoDatabase.db");
 utils(client)
 
 export const restClient = new REST({ version: '10' }).setToken(process.env.CLIENT_TOKEN!);

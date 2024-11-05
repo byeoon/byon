@@ -8,6 +8,8 @@ import { komiHistory } from "./commands/komiHistory";
 import { guildAvatarContext, userAvatar, userAvatarContext } from "./commands/userAvatar";
 import { userBanner, userBannerContext } from "./commands/userBanner";
 import { userProfile, userProfileContext } from "./commands/userProfile";
+import { guildKomiChannelAdd } from "./commands/guildKomiAdd";
+import { guildKomiChannelDel } from "./commands/guildKomiDel";
 
 export const Commands: Command[] = [
   komiTalk,
@@ -18,7 +20,9 @@ export const Commands: Command[] = [
   komiHistory,
   userAvatar,
   userBanner,
-  userProfile
+  userProfile,
+  guildKomiChannelAdd,
+  guildKomiChannelDel
 ];
 
 export const UserCommands: UserCommand[] = [

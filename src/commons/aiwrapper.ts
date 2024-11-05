@@ -105,11 +105,19 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
 
   model = await getModel(user);
   
-  let response = (await model.startChat({
-    history: chatHistory
-  }).sendMessage(processedText)).response.text();
+  let response: string;
+  
+  try {
+    response = (await model.startChat({
+      history: chatHistory
+    }).sendMessage(processedText)).response.text();
 
-  logger (`@${user.username} queried shouko talk [resLength: ${response.length}, promptLength: ${text.length}]`)
+    logger (`@${user.username} queried shouko talk [resLength: ${response.length}, promptLength: ${text.length}]`)
+  } catch (err: any) {
+    logger("[ShoukoAI] " + err);
+    response = getConfigValue("RESPONSE_BLOCKED")[Math.floor(Math.random() * getConfigValue("RESPONSE_BLOCKED").length)];
+  }
+
 
   if (response.length <= 1) response = "...";
   if (processedText.length <= 1) processedText = "...";

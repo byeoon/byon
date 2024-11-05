@@ -4,15 +4,22 @@ import { getConfigValue, logger, makeErrorMessage } from "./errorDebugger";
 import { Commands } from "../commands";
 import { ShoukoHybridCommand } from "../commons/command";
 import { prefix } from "..";
+import { getGuildVars } from "../commons/dbManager";
 
 const respond = async (message: Message<boolean>) => {
   let res: string;
   let embeds: EmbedBuilder[] = [];
+
+  let query: string = message.cleanContent;
+  
+  if (message.cleanContent.toLowerCase().startsWith("shouko")) {
+    query = message.cleanContent.slice('shouko'.length);
+  }
   
   await (message.channel as TextChannel).sendTyping();
 
   try {
-    res = await chatBot(message.cleanContent, message.author);
+    res = await chatBot(query, message.author);
   } catch (err: any) {
     res = makeErrorMessage(err);
   }
@@ -40,8 +47,10 @@ export default async (client: Client) => {
         }
       break;
       default:
-        if (message.cleanContent.toLowerCase().startsWith("shouko")) {
-          await respond(message);
+        if (message.inGuild()) {
+          if (!message.cleanContent.startsWith(prefix) && (message.cleanContent.toLowerCase().startsWith("shouko") || (await getGuildVars(message.guild.id, "AIChannelIds") as Array<string>).includes(message.channelId))) {
+            await respond(message);
+          }
         }
       break;
     }
