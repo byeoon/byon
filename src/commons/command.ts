@@ -119,6 +119,7 @@ export class ShoukoHybridCommand {
       const option = this?.options != null ? (this.options as CommandInteractionOptionResolver<CacheType>).get(name) : null;
       if (!option) return null;
 
+      // TODO: CHANNEL ARGS
       // Type checking based on ApplicationCommandOptionType
       switch (option.type) {
         case ApplicationCommandOptionType.User:
