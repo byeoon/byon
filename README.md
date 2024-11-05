@@ -15,9 +15,12 @@ npm install
 GOOGLE_API_KEY=ABCDEFGH
 CLIENT_TOKEN=ABCDEFGH
 ```
-* Modify the instructions.txt as you please, this will define the bot's personality.
+* Add a instructions.txt in your project folder, this will be the system instructions, what defines the bot's personality.
 * All referenced configs in the bot is in `config.json`
 
+### instructions placeholders
+* `$TIMESTAMP` displays the last message timestamp
+* `$USERNAME` displays the user's username
 # Deploying the bot
 On dev environment:
 ```bash
