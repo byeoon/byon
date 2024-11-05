@@ -1,4 +1,5 @@
 shoukoDatabase.db
+instructions.txt
 src/commands/indexer.ts
 indexer.json
 
