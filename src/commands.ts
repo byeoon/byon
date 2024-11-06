@@ -10,6 +10,7 @@ import { userBanner, userBannerContext } from "./commands/userBanner";
 import { userProfile, userProfileContext } from "./commands/userProfile";
 import { guildKomiChannelAdd } from "./commands/guildKomiAdd";
 import { guildKomiChannelDel } from "./commands/guildKomiDel";
+import { pingCommand } from "./commands/ping";
 
 export const Commands: Command[] = [
   komiTalk,
@@ -22,7 +23,8 @@ export const Commands: Command[] = [
   userBanner,
   userProfile,
   guildKomiChannelAdd,
-  guildKomiChannelDel
+  guildKomiChannelDel,
+  pingCommand
 ];
 
 export const UserCommands: UserCommand[] = [

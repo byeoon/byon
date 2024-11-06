@@ -3,6 +3,7 @@ import { getConfigValue } from "../events/errorDebugger";
 import { RawUserData } from "discord.js/typings/rawDataTypes";
 import { restClient } from "..";
 import NodeCache from "node-cache";
+import { getAllMessageCount, getQueryCount } from "./dbManager";
 
 let rawUserCache: NodeCache;
 let rawMemberCache: NodeCache;
@@ -101,4 +102,22 @@ export const splitArrayIntoChunks = (array: Array<any>, chunkSize: number): Arra
     result.push(array.slice(i, i + chunkSize));
   }
   return result;
+}
+
+export const getAllResourceUsage = async (): Promise<any> => {
+  const memoryUsage = process.memoryUsage();
+  const memoryUsageInMB = {
+    rss: (memoryUsage.rss / 1024 / 1024).toFixed(2), // Resident Set Size
+    heapTotal: (memoryUsage.heapTotal / 1024 / 1024).toFixed(2), // V8's heap total
+    heapUsed: (memoryUsage.heapUsed / 1024 / 1024).toFixed(2), // V8's heap used
+    external: (memoryUsage.external / 1024 / 1024).toFixed(2), // C++ objects bound to JavaScript objects
+    arrayBuffers: (memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2) // Memory used by ArrayBuffer and SharedArrayBuffer
+  };
+
+  const processUsage = {
+    dbQueriesSinceRestart: getQueryCount(),
+    dbRecordCount: await getAllMessageCount()
+  }
+
+  return {...memoryUsageInMB, ...processUsage}
 }

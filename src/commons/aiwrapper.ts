@@ -103,6 +103,8 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
   let chatHistory = history || await loadChatHistory(user.id);
   let processedText = text;
 
+  if (processedText.length <= 1) processedText = "...";
+
   model = await getModel(user);
   
   let response: string;
@@ -120,7 +122,12 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
 
 
   if (response.length <= 1) response = "...";
-  if (processedText.length <= 1) processedText = "...";
+
+  if (response.toLowerCase().includes("i am a large language model") 
+    || response.toLowerCase().includes("trained by google")
+    || response.toLowerCase().includes("against my programming")
+    || response.toLowerCase().includes("please provide")
+  ) response = "no just no.. i don't want to!!!!";
 
   await appendChatHistory(user.id, [
     {

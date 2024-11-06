@@ -1,8 +1,9 @@
 import { Content } from "@google/generative-ai";
 import { Client } from "discord.js";
 import NodeCache from "node-cache";
-import { Sequelize, DataTypes, Model, InferAttributes, InferCreationAttributes, Transaction, CreationOptional } from "sequelize";
+import { Sequelize, DataTypes, Model, InferAttributes, InferCreationAttributes, Transaction, CreationOptional, QueryTypes } from "sequelize";
 import { getConfigValue, logger } from "../events/errorDebugger";
+import fs from 'fs';
 
 export interface userSettings {
   lastChatTimestamp?: number;
@@ -48,19 +49,27 @@ export class ShoukoChatHistory extends Model<InferAttributes<ShoukoChatHistory>,
   declare updatedAt?: CreationOptional<Date>;
 }
 
+
 let sequelize: Sequelize;
 let shoukoUserCache: NodeCache;
 let chatHistoryCache: NodeCache;
 let shoukoGuildCache: NodeCache;
 
 let isDebugging = false;
+let storageDbPath: string;
+let messageCount: number = 0;
+let queryCount: number = 0;
 
 export default async (_client: Client, storage: string) => {
   isDebugging = process.env.DEBUG_MODE?.toLowerCase() === "true";
+  storageDbPath = storage;
   sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: storage,
-    logging: msg => isDebugging && logger(`[Shouko DB] ${msg}`)
+    logging: msg => {
+      queryCount += 1;
+      isDebugging && logger(`[Shouko DB] ${msg}`)
+    }
   });
 
   shoukoUserCache = new NodeCache();
@@ -108,6 +117,49 @@ export default async (_client: Client, storage: string) => {
     logger(`[Shouko DB] Unable to connect to the database: ${error}`);
   }
 };
+
+export const getDatabaseSize = async (): Promise<string> => {
+  const dialect = sequelize.getDialect();
+
+  return loggedTransaction(async (transaction: Transaction) => {
+    if (dialect === 'mysql') {
+      const [results]: Array<any> = await sequelize.query(`
+        SELECT table_schema AS "database", 
+               SUM(data_length + index_length) / 1024 / 1024 AS "size_in_mb"
+        FROM information_schema.tables
+        WHERE table_schema = DATABASE()
+        GROUP BY table_schema;
+      `, { type: QueryTypes.SELECT, transaction })
+      return results[0].size_in_mb.toFixed(2) + " MB";
+  
+    } else if (dialect === 'postgres') {
+      const [results]: Array<any> = await sequelize.query(`
+        SELECT pg_size_pretty(pg_database_size(current_database())) AS size;
+      `, { type: QueryTypes.SELECT, transaction });
+      return results[0].size || "0 MB";
+  
+    } else if (dialect === 'sqlite') {
+      const stats = fs.statSync(storageDbPath);
+      return (stats.size / 1024 / 1024).toFixed(2) + " MB";
+    } else {
+      throw new Error ('Unsupported database dialect')
+    }
+  });
+}
+
+export const getAllMessageCount = async (): Promise<number> => {
+  return await loggedTransaction(async (transaction: Transaction) => {
+    if (messageCount <= 0) {
+      messageCount = (await ShoukoChatHistory.findAll({ transaction })).map(c => c.chatHistory.length).reduce((a, b) => a + b, 0);
+    }
+
+    return messageCount;
+  });
+}
+
+export const getQueryCount = (): number => {
+  return queryCount
+}
 
 export const loggedTransaction = async (callback: (transaction: Transaction) => Promise<any>): Promise<any> => {
   const transaction = await sequelize.transaction();
@@ -345,6 +397,8 @@ export const appendChatHistory = async (userId: string, historyToAppend: Array<C
       }
 
       chatHistory.chatHistory.push(...historyToAppend);
+      messageCount += historyToAppend.length;
+      if (chatHistory.chatHistory.length >= 50) chatHistory.chatHistory.splice(0, 2);
       chatHistoryCache.set<ShoukoChatHistoryData>(userId, chatHistory, getConfigValue("CACHE_TTL"));
 
       await ShoukoChatHistory.upsert(chatHistory, { transaction: transaction });
@@ -364,6 +418,8 @@ export const purgeChatHistory = async (userId: string): Promise<boolean> => {
       if (!chatHistory) {
         return;
       }
+
+      messageCount -= chatHistory.chatHistory.length;
 
       await ShoukoChatHistory.destroy({
         where: {

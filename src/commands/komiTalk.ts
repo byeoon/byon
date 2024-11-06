@@ -47,6 +47,6 @@ export const komiTalk: Command = {
     if (res.length > 2000) embedsToSend.push(responseEmbed);
     embedsToSend.push(replyEmbed);
 
-    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res, ephemeral: shouldEphmeral}).catch(err => logger (err));
+    await interaction.followUp({embeds: embedsToSend, content: res.length > 2000 ? undefined : res + "** **", ephemeral: shouldEphmeral}).catch(err => logger (err));
   }
 }
