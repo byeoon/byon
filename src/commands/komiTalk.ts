@@ -29,7 +29,7 @@ export const komiTalk: Command = {
     let shouldEphmeral: boolean = interaction.getOption<boolean>("ephmeral") || false;
 
     if (!(getConfigValue("WHITELISTED_USERS") as Array<string>).includes(interaction.user.id))
-      return await interaction.reply({ content: "no, you can't do that.\n-#you really can't...", ephemeral: true});
+      return await interaction.reply({ content: (getConfigValue("NOT_WHITELISTED_MESSAGES") as Array<string>)[Math.floor((getConfigValue("NOT_WHITELISTED_MESSAGES") as Array<string>).length * Math.random())], ephemeral: true});
 
     await interaction.deferReply({ephemeral: shouldEphmeral});
     res = await chatBot(interaction.getOption<string>("say")!, interaction.user);

@@ -2,9 +2,11 @@
   "EMBED_COLOR": "#454090",
   "CACHE_TTL": 600,
   "WHITELISTED_USERS": [
-    "485749822322769920",
     "744912373844017152",
     "514986731263492096"
+  ],
+  "WHITELISTED_GUILDS": [
+    "1218305058912079983"
   ],
   "DEV_USERS": [
     "485749822322769920"
@@ -15,6 +17,10 @@
     "Oopsies, I might have done something wrong 3:",
     "Sorry!!!!!! (T^T \")",
     "Eeep!"
+  ],
+  "NOT_WHITELISTED_MESSAGES": [
+    "no, you can't do that.\n-# you really can't...",
+    "meow, can't do that!!!"
   ],
   "HELP_MESSAGES": [
     "here you goo!! 👌",

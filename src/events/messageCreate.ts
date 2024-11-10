@@ -49,6 +49,8 @@ export default async (client: Client) => {
       default:
         if (message.inGuild()) {
           if (!message.cleanContent.startsWith(prefix) && (message.cleanContent.toLowerCase().startsWith("shouko") || (await getGuildVars(message.guild.id, "AIChannelIds") as Array<string>).includes(message.channelId))) {
+            if (!(getConfigValue("WHITELISTED_GUILDS") as Array<string>).includes(message.guild.id))
+              return await message.reply({ content: (getConfigValue("NOT_WHITELISTED_MESSAGES") as Array<string>)[Math.floor((getConfigValue("NOT_WHITELISTED_MESSAGES") as Array<string>).length * Math.random())]});
             await respond(message);
           }
         }
