@@ -287,3 +287,11 @@ export const TranslateApplicationCommandOptionType: object = {
   "10": "Number",
   "11": "Attachment"
 }
+
+export interface APIActionRequestResult {
+  url: string;
+  anime_name: string;
+}
+export interface APIActionResult {
+  results: APIActionRequestResult[];
+}

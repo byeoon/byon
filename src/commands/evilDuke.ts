@@ -2,19 +2,7 @@ import { Client, EmbedBuilder } from "discord.js"
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command"
 import { getConfigValue } from "../events/errorDebugger"
 
-enum Action {
-    Hug = "hug",
-    Cuddle = "cuddle",
-    Pat = "pat",
-    Kiss = "kiss",
-    Slap = "slap",
-    Bite = "bite",
-    Shoot = "shoot",
-    Yeet = "throw",
-    Tickle = "tickle",
-    Stare = "stare",
-    Pout = "pout",
-  }
+
 
 export const evilDuke: Command = {
   name: "middlefingerpenguinvirus",
