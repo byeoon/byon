@@ -8,6 +8,7 @@ import { userProfile, userProfileContext } from "./commands/userProfile";
 import { pingCommand } from "./commands/ping";
 import { komiTalk } from "./commands/komiTalk";
 import { action } from "./commands/action";
+import { evilDuke } from "./commands/evilDuke";
 
 export const Commands: Command[] = [
   komiJumpscare,
@@ -18,7 +19,8 @@ export const Commands: Command[] = [
   userBanner,
   userProfile,
   pingCommand,
-  action
+  action,
+  evilDuke
 ];
 
 export const UserCommands: UserCommand[] = [
