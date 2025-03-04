@@ -60,7 +60,6 @@ let sequelize: Sequelize;
 let shoukoUserCache: NodeCache;
 let chatHistoryCache: NodeCache;
 let shoukoGuildCache: NodeCache;
-let actionsCache: NodeCache;
 
 let isDebugging = false;
 let storageDbPath: string;
@@ -82,7 +81,6 @@ export default async (_client: Client, storage: string) => {
   shoukoUserCache = new NodeCache();
   chatHistoryCache = new NodeCache();
   shoukoGuildCache = new NodeCache();
-  actionsCache = new NodeCache();
 
   ShoukoUser.init({
     userId: { type: DataTypes.STRING, primaryKey: true },
