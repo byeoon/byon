@@ -8,6 +8,12 @@ export const truncateString = (str: string, maxLength: number): string => {
     }
     return str;
   }
+
+export const RequiredUserOption: ApplicationCommandOption = {
+  name: "user",
+  description: "target user",
+  type: ApplicationCommandOptionType.User,
+};
   
 export const action: Command = {
   name: "act",
@@ -21,12 +27,7 @@ export const action: Command = {
         description: "i need a hug",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
-            {
-                name: "user",
-                description: "user to hug",
-                type: ApplicationCommandOptionType.User,
-                required: true,
-            }
+            RequiredUserOption
         ],
     },
     {
@@ -34,12 +35,7 @@ export const action: Command = {
         description: "i want to pat seele",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
-            {
-                name: "user",
-                description: "user to pat",
-                type: ApplicationCommandOptionType.User,
-                required: true,
-            }
+            RequiredUserOption
         ],
     },
     
