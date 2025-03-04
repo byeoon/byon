@@ -1,8 +1,8 @@
 {
-  "EMBED_COLOR": "#454090",
+  "EMBED_COLOR": "#727fff",
   "CACHE_TTL": 600,
   "WHITELISTED_USERS": [
-    "744912373844017152",
+    "1167275288036655133",
     "514986731263492096",
     "485749822322769920"
   ],
@@ -11,18 +11,18 @@
     "785839340252168232"
   ],
   "DEV_USERS": [
-    "485749822322769920"
+    "1167275288036655133"
   ],
   "ERROR_MESSAGES": [
     "Uhhhh, something has gone wrong!!!! sorry!!",
     "I've caught an error!!",
     "Oopsies, I might have done something wrong 3:",
     "Sorry!!!!!! (T^T \")",
-    "Eeep!"
+    "eeeeyikes!"
   ],
   "NOT_WHITELISTED_MESSAGES": [
-    "no, you can't do that.\n-# you really can't...",
-    "meow, can't do that!!!"
+    "meow, can't do that!!!",
+    "erm.... nuh uh uh!!!!!"
   ],
   "HELP_MESSAGES": [
     "here you goo!! 👌",
@@ -31,20 +31,14 @@
     "nyan nyan 🙂",
     "help 4 u!! :3 😘"
   ],
-  "CHAT_HISTORY_MESSAGES": [
-    "chat history? here you go!! nyan! :3",
-    "here u go!!!!! 🙂",
-    "meow 🙂",
-    "nyan nyan 🙂"
-  ],
   "INTERACTION_NOT_ALLOWED_MESSAGES" : [
     "that's not for you.. 🙂",
     "not ur interaction nyan 🙂",
     "not for u dummy!!!"
   ],
   "RESPONSE_BLOCKED": [
-    "!! meow?",
-    "mrrp meow meow mrrp meow..",
+    "!! meow? (what?)",
+    "mrrp meow meow mrrp meow.. (nuh uh uh)",
     "meow :3 !!"
   ],
   "JUMPSCARE_GIFS": [
@@ -92,15 +86,15 @@
   },
   "BADGES_LIST": {
     "Staff": {
-      "emoji": "<:badge_staff:1296834088652771419>",
+      "emoji": "<:badge_staff:1346504072764719126>",
       "url": "https://support.discord.com/hc/en-us/articles/360035962891-Profile-Badges-101"
     },
     "Partner": {
-      "emoji": "<:badge_partner:1296834359424454717>",
+      "emoji": "<:badge_partner:1346504177735434262>",
       "url": "https://discord.com/partners"
     },
     "Hypesquad": {
-      "emoji": "<:badge_hypesquad:1296834312473411666>",
+      "emoji": "<:badge_hypesquadevents:1346506062370701433>",
       "url": "https://discord.com/settings/hypesquad-online"
     },
     "HypeSquadOnlineHouse1": {
@@ -108,7 +102,7 @@
       "url": "https://discord.com/settings/hypesquad-online"
     },
     "HypeSquadOnlineHouse2": {
-      "emoji": "<:badge_hypesquadbrilliance:1296834606401589319>",
+      "emoji": "<:badge_brilliance:1346505636921479168>",
       "url": "https://discord.com/settings/hypesquad-online"
     },
     "HypeSquadOnlineHouse3": {
@@ -116,7 +110,7 @@
       "url": "https://discord.com/settings/hypesquad-online"
     },
     "BugHunterLevel1": {
-      "emoji": "<:badge_bughunter1:1296834178553352272>",
+      "emoji": "<:badge_bughunter1:1346503962991263875>",
       "url": "https://support.discord.com/hc/en-us/articles/360046057772-Discord-Bugs"
     },
     "BugHunterLevel2": {
@@ -127,19 +121,19 @@
       "emoji": "<:badge_earlydev:1296834468375560222>"
     },
     "CertifiedModerator": {
-      "emoji": "<:badge_moderatoralumni:1296834423664283788>",
+      "emoji": "<:badge_moderatoralumni:1346503775489359992>",
       "url": "https://discord.com/safety-library"
     },
     "ActiveDeveloper": {
-      "emoji": "<:badge_activedev:1296834503758581781>",
+      "emoji": "<:badge_activedev:1346505561075875891>",
       "url": "https://support-dev.discord.com/hc/en-us/articles/10113997751447-Active-Developer-Badge"
     },
     "PremiumEarlySupporter": {
-      "emoji": "<:badge_earlysupporter:1296834267921383597>",
+      "emoji": "<:badge_earlysupporter:1346505730852782191>",
       "url": "https://support.discord.com/hc/en-us/articles/360017949691-Legacy-Nitro-Classic-FAQ"
     },
     "Nitro": {
-      "emoji": "<:badge_nitro:1296834146798276708>",
+      "emoji": "<:badge_nitro:1346505827892334744>",
       "url": "https://discord.com/nitro"
     },
     "Bot": {
@@ -150,8 +144,8 @@
       "emoji": " <:shouko:1297466331691483197>"
     },
     "Specifix": {
-      "emoji": "<:spec_miku:1297464705132269601> ",
-      "url": "https://specifix.dev/"
+      "emoji": "<:badge_staff:1346504072764719126> ",
+      "url": "https://byeoon.dev/"
     }
   }
 }

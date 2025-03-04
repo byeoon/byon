@@ -3,7 +3,7 @@ import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextTy
 import { getConfigValue } from "../events/errorDebugger"
 
 export const komiJumpscare: Command = {
-  name: "jumpscare_me_onegaishimasu",
+  name: "jumpscare",
   description: '"Please jumpscare me, thank you", You said.',
   category: ShoukoCommandCategory.Misc,
   integrationTypes: UniversalIntegrationType,

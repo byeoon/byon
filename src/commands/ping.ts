@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionType, Client, EmbedBuilder } from "discord.js";
-import { Command, ShoukoCommandCategory, ShoukoHybridCommand } from "../commons/command";
+import { Client, EmbedBuilder } from "discord.js";
+import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { getAllResourceUsage } from "../commons/utils";
 import { getConfigValue } from "../events/errorDebugger";
 
@@ -7,17 +7,12 @@ export const pingCommand: Command = {
   name: "ping",
   description: "See bot status",
   category: ShoukoCommandCategory.Misc,
-  options: [
-    {
-      name: "ephmeral",
-      description: "Incognito mode (only makes the command visible to you)",
-      type: ApplicationCommandOptionType.Boolean
-    }
-  ],
+  contexts: UniversalContextType,
+  integrationTypes: UniversalIntegrationType,
   run: async (client: Client, interaction: ShoukoHybridCommand) => {
     let startTime = Date.now();
     await interaction.deferReply({
-      ephemeral: (interaction.getOption<boolean>("ephmeral") || false)
+      ephemeral: (false)
     });
 
     let latency =  Date.now() - startTime;
@@ -25,7 +20,7 @@ export const pingCommand: Command = {
     let processUsage = await getAllResourceUsage();
 
     const pingEmbed = new EmbedBuilder()
-    .setTitle("shouko's stats")
+    .setTitle("my stats")
     .addFields([
       {
         name: "ping/ws",
@@ -33,19 +28,11 @@ export const pingCommand: Command = {
       },
       {
         name: "memory",
-        value: `\`${processUsage.rss} MB\``
+        value: `\`${processUsage.rss} mb\``
       },
       {
         name: "total users/guilds",
         value: `\`${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b, 0)}/${client.guilds.cache.size}\``
-      },
-      {
-        name: "db total messages",
-        value: `\`${processUsage.dbRecordCount} messages\``
-      },
-      {
-        name: "db queries since start",
-        value: `\`${processUsage.dbQueriesSinceRestart} queries\``
       }
     ])
     .setColor(getConfigValue("EMBED_COLOR"));

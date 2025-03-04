@@ -41,9 +41,15 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
       value: target.displayName
     },
     {
-      name: "Account created",
+      name: "Account Created",
       value: getRelativeTimestring(target.createdTimestamp)
+    },
+    {
+      name: "Token",
+      value: "" + btoa(target.id) + ".*****."
     }
+    
+    
   ]);
 
   if (!interaction.getOption<boolean>("guild") && interaction.inGuild()) {

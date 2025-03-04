@@ -1,11 +1,12 @@
-import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction } from "discord.js";
+import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions } from "discord.js";
 import { prefix } from "..";
 import { logger } from "../events/errorDebugger";
 
 export enum ShoukoCommandCategory {
   General = "General",
   Shouko = "Shouko",
-  Misc = "Misc"
+  Misc = "Misc",
+  Acts = "Actions"
 }
 
 export interface ShoukoCommand extends BaseApplicationCommandData {
@@ -169,10 +170,10 @@ export class ShoukoHybridCommand {
     }
   }
 
-  async deferReply(content: MessageCreateOptions | MessagePayload | InteractionReplyOptions): Promise<InteractionResponse<boolean> | Message<boolean>> {
+  async deferReply(content: MessageCreateOptions | MessagePayload | InteractionDeferReplyOptions ): Promise<InteractionResponse<boolean> | Message<boolean>> {
     if (this.isInteraction(this.context)) {
       if (!this.context.isRepliable()) throw new Error("Interaction has already been replied.");
-      return await this.context.deferReply(content as InteractionReplyOptions)
+      return await this.context.deferReply(content as InteractionDeferReplyOptions)
     } else if (this.isMessage(this.context)) {
       (content as MessageCreateOptions).content = "Shouko is thinking..";
       (content as MessageCreateOptions).allowedMentions = { repliedUser: false }
@@ -183,10 +184,10 @@ export class ShoukoHybridCommand {
     }
   }
 
-  async editReply(content: MessageCreateOptions | MessagePayload | InteractionReplyOptions): Promise<Message<boolean>> {
+  async editReply(content: MessageCreateOptions | MessagePayload | InteractionEditReplyOptions ): Promise<Message<boolean>> {
     if (this.isInteraction(this.context)) {
       if (!(this.context.replied || this.context.deferred)) throw new Error("Interaction not replied yet.");
-      return await this.context.editReply(content as InteractionReplyOptions);
+      return await this.context.editReply(content as InteractionEditReplyOptions);
     } else if (this.isMessage(this.context)) {
       if (!this.message) throw new Error("Interaction not replied yet.");
       (content as MessageCreateOptions).allowedMentions = { repliedUser: false }

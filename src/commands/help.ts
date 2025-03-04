@@ -9,9 +9,9 @@ const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage
   let maxPages: number = Object.keys(ShoukoCommandCategory).length;
   let embed = new EmbedBuilder()
   .setColor(getConfigValue("EMBED_COLOR"))
-  .setTitle("shouko's help page")
+  .setTitle("**Byon Help Desk**")
   .setFooter({
-    text: 'shouko v' + shoukoVersion
+    text: 'byon v' + shoukoVersion
   });
 
   if (!category) category = "General"; 
@@ -36,7 +36,7 @@ const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage
       }
     });
 
-    embed.setDescription(`Listing **${_Commands.length} available** commands (total of ${Commands.length})\nMade with **<3** by [specifix](<https://specifix.dev/>)\n### Category: ${Object.keys(ShoukoCommandCategory)[currentPage]}`)
+    embed.setDescription(`Listing **${_Commands.length} available** commands\n### Category: ${Object.keys(ShoukoCommandCategory)[currentPage]}`)
 
     const leftButton = new ButtonBuilder()
     .setCustomId("leftButton_" + interaction.id)
@@ -76,7 +76,7 @@ const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage
 
 export const HelpCommand: Command = {
   name: 'help',
-  description: 'Lists shouko\'s available commands in a (decent) format.. i guess.',
+  description: 'All commands listed out in a clean way.',
   category: ShoukoCommandCategory.General,
   options: [
     {
@@ -84,11 +84,6 @@ export const HelpCommand: Command = {
       description: "The specified command for its help page.",
       type: ApplicationCommandOptionType.String,
       autocomplete: true
-    },
-    {
-      name: "ephmeral",
-      description: "Incognito mode (only makes the command visible to you)",
-      type: ApplicationCommandOptionType.Boolean
     }
   ],
   contexts: UniversalContextType,
@@ -96,7 +91,7 @@ export const HelpCommand: Command = {
   run: async (_client: Client, interaction: ShoukoHybridCommand) => {
 
     await interaction.deferReply({
-      ephemeral: (interaction.getOption<boolean>("ephmeral") || false)
+      ephemeral: (false)
     });
 
     let selectedCommandName: string = interaction.getOption<string>("command") || ""

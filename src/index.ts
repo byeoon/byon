@@ -10,14 +10,14 @@ import utils from './commons/utils';
 
 require("dotenv").config("../.env");
 
-console.log("Loading ShoukoV2, attempting to connect to discord gateway");
+console.log("[Byon] Attempting to connect to discord gateway");
 
 (DefaultWebSocketManagerOptions.identifyProperties as any).browser = "Discord Android";
-(DefaultWebSocketManagerOptions.identifyProperties as any).os = "shouko";
-(DefaultWebSocketManagerOptions.identifyProperties as any).device = "shouko";
+(DefaultWebSocketManagerOptions.identifyProperties as any).os = "byon";
+(DefaultWebSocketManagerOptions.identifyProperties as any).device = "byon";
 
 export const shoukoVersion = process.env.npm_package_version
-export const prefix = "s."
+export const prefix = "b!"
 
 
 const client: Client = new Client({
