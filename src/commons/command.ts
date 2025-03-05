@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions, Channel } from "discord.js";
+import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions, Channel, Attachment } from "discord.js";
 import { prefix } from "..";
 import { logger } from "../events/errorDebugger";
 
@@ -14,7 +14,7 @@ export interface ShoukoCommand extends BaseApplicationCommandData {
   notHybrid?: boolean
 }
 
-type CommandOptionValue =
+export type CommandOptionValue =
   | string
   | number
   | boolean
@@ -23,8 +23,9 @@ type CommandOptionValue =
   | GuildMember
   | Promise<GuildMember>
   | Channel
-  | Promise<Channel>
-  | null
+  | Promise<Channel | null>
+  | Attachment
+  | null;
 
 export class ShoukoHybridCommand {
   client: Client;
@@ -230,6 +231,7 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
       // Parse and store the argument based on the type defined in the command options
       switch (option.type) {
         case ApplicationCommandOptionType.User:
+          {
             if (!arg) {
               options[option.name] = null;
               break;
@@ -240,13 +242,16 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
               ? (client.users.cache.get(userId) ?? client.users.fetch(userId))
               : null;
           break;
+        }
         case ApplicationCommandOptionType.Channel:
+          {
           const channelId = arg.replace(/([^0-9]+)/g, "");
           const isValid = /^[0-9]+$/.test(channelId);
           options[option.name] = isValid
             ? (client.channels.cache.get(channelId) ?? client.channels.fetch(channelId))
             : null;
           break;
+        }
         case ApplicationCommandOptionType.Boolean:
           options[option.name] = arg ? arg.toLowerCase() === "true" : false;
           break;

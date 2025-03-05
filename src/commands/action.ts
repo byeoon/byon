@@ -38,7 +38,7 @@ export const action: Command = {
    // };
 
     const target = interaction.getOption<User>("user");
-    const action = interaction.getOption<string>("act")!;
+    const action = interaction.getOption<string>("hug")!;
   //  const req = await fetch(new URL(action, BASE_URLS.ACTIONS));
     
    // const {
@@ -47,12 +47,12 @@ export const action: Command = {
     //  console.log(req.json);
 
       const pingEmbed = new EmbedBuilder()
-      .setTitle("e")
+      .setTitle("Awwww, adorable!")
       .setImage("https://cdn.discordapp.com/avatars/485749822322769920/06a8ae0cc26d6dd5e0c9fc41c27689d2.png?size=1024")
       .setColor(getConfigValue("EMBED_COLOR"));
 
     await interaction.reply({
-      content: interaction.getOption<string>("text")?.toString() || "me when i get " + target + " with my " + action,
+      content: interaction.getOption<string>("text")?.toString() || "me when i get <@" + target + "> with my " + action,
       embeds: [pingEmbed]
     })
   }
