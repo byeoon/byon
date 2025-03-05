@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandOption, Client, EmbedBuilder, User } from "discord.js"
-import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command"
+import { APIActionResult, Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType } from "../commons/command"
 import { getConfigValue } from "../events/errorDebugger";
 
 export const RequiredUserOption: ApplicationCommandOption = {
@@ -32,24 +32,34 @@ export const action: Command = {
             RequiredUserOption
         ],
     },
+    {
+      name: "kiss",
+      description: "i want to kiss seele",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+          RequiredUserOption
+      ],
+  },
   ],
   run: async (_client: Client, interaction: ShoukoHybridCommand) => { 
- //   const BASE_URLS = {
-  //    ACTIONS: "https://nekos.best/api/v2/",
-   // };
+    const BASE_URLS = {
+      ACTIONS: "https://nekos.best/api/v2/",
+    };
 
     const target = interaction.getOption<User>("user");
     const action = interaction.getSubcommand();
-  //  const req = await fetch(new URL(action, BASE_URLS.ACTIONS));
+    const req = await fetch(new URL(action + "", BASE_URLS.ACTIONS));
     
-   // const {
-  //    results: [{ url, anime_name }],
-   //   } = (await req.json()) as APIActionResult;
-    //  console.log(req.json);
+    const {
+      results: [{ url, anime_name }],
+      } = (await req.json()) as APIActionResult;
 
       const pingEmbed = new EmbedBuilder()
       .setTitle("Awwww, adorable!")
-      .setImage("https://cdn.discordapp.com/avatars/485749822322769920/06a8ae0cc26d6dd5e0c9fc41c27689d2.png?size=1024")
+      .setImage(url)
+      .setFooter({
+        text: 'Source: ' + anime_name
+      })
       .setColor(getConfigValue("EMBED_COLOR"));
 
     await interaction.reply({

@@ -4,7 +4,7 @@ import { getConfigValue } from "../events/errorDebugger"
 
 export const komiJumpscare: Command = {
   name: "jumpscare",
-  description: '"Please jumpscare me, thank you", You said.',
+  description: 'Please jumpscare me!!!',
   category: ShoukoCommandCategory.Misc,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,

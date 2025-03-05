@@ -9,6 +9,7 @@ import { pingCommand } from "./commands/ping";
 import { komiTalk } from "./commands/komiTalk";
 import { action } from "./commands/action";
 import { evilDuke } from "./commands/evilDuke";
+import { neko } from "./commands/neko";
 
 export const Commands: Command[] = [
   komiJumpscare,
@@ -20,7 +21,8 @@ export const Commands: Command[] = [
   userProfile,
   pingCommand,
   action,
-  evilDuke
+  evilDuke,
+  neko
 ];
 
 export const UserCommands: UserCommand[] = [

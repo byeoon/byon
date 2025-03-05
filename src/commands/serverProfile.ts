@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, Client, EmbedBuilder, GuildMember, User } from "discord.js"
-import { getClan, getRawMember, getUserBadgesEmojis, getUsername, RawMemberData } from "../commons/utils"
+import { getClan, getUserBadgesEmojis, getUsername } from "../commons/utils"
 import { getConfigValue } from "../events/errorDebugger";
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
 import Vibrant = require('node-vibrant');
@@ -50,41 +50,6 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
     }
   ]);
 
-  if (!interaction.getOption<boolean>("guild") && interaction.inGuild()) {
-    let targetMember: GuildMember | undefined = await interaction.guild?.members.fetch(target);
-
-    if (targetMember) {
-      let rawTargetMember: RawMemberData | undefined = await getRawMember(client, targetMember);
-      let roles = targetMember.roles.cache.map((role) => {
-        if (role.id !== interaction.guild?.roles.everyone.id) return `<@&${role.id}>`
-      }).slice().reverse()
-
-      avatar = targetMember.displayAvatarURL({
-        size: 4096,
-        forceStatic: false,
-      });
-      staticAvatar = targetMember.displayAvatarURL({
-        size: 4096,
-        forceStatic: true
-      });
-
-      if (rawTargetMember && rawTargetMember.banner) {
-        banner = `https://cdn.discordapp.com/guilds/${interaction.guild?.id}/users/${targetMember.id}/banners/${rawTargetMember.banner}${rawTargetMember.banner.startsWith("a_") ? ".gif" : ".webp"}?size=4096&dynamic=true`
-      }
-
-      profileEmbed.addFields([
-        {
-          name: "Joined at",
-          value: targetMember.joinedTimestamp ? getRelativeTimestring(targetMember.joinedTimestamp || 0) : "None"
-        },
-        {
-          name: "Roles",
-          value: `${roles.length > 0 ? roles.join(" ") : ""}` + " @everyone"
-        }
-      ])
-    }
-  }
-
   let avImageFile = Buffer.from(await (await fetch(staticAvatar)).arrayBuffer());
   var v = await new Vibrant(await sharp(avImageFile).png().toBuffer()).getPalette();
 
@@ -99,34 +64,23 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
 
   await interaction.reply({
     embeds: [profileEmbed],
-    ephemeral: interaction.getOption<boolean>("ephmeral") || false
+    ephemeral: false
   });
 }
 
-export const userProfile: Command = {
-  name: "profile",
-  description: "Get a user's profile in detail.",
+export const serverProfile: Command = {
+  name: "server",
+  description: "Get server information in detail.",
   category: ShoukoCommandCategory.General,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
   options: [
     {
-      name: "user",
-      type: ApplicationCommandOptionType.User,
-      description: "The user to fetch",
+      name: "guildId",
+      type: ApplicationCommandOptionType.String,
+      description: "The server to fetch",
       required: false
     },
-    {
-      name: "guild",
-      type: ApplicationCommandOptionType.Boolean,
-      description: "Show user profile or guild profile? (default true)"
-    }, 
-    {
-      name: "ephmeral",
-      type: ApplicationCommandOptionType.Boolean,
-      description: "Incognito mode (only makes the command visible to you)",
-      required: false
-    }
   ],
   run: generateMessage
 }

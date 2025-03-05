@@ -26,7 +26,7 @@ const generateMessage = async (_client: Client, interaction: ShoukoHybridCommand
   .setURL(avatarURL)
   .setColor(getConfigValue("EMBED_COLOR"))
   .setFooter({
-    text: `shouko v${shoukoVersion}`
+    text: `byon v${shoukoVersion}`
   });
 
   await interaction.reply({
