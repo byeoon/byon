@@ -1,3 +1,4 @@
+# ⚠️ DISCONTINUED (i wont be updating it anymore)
 # shouko-san
 My multi-purpose discord bot \
 ⚠️ (code is very :sob:)
