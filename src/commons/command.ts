@@ -1,6 +1,7 @@
-import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions, Channel, Attachment } from "discord.js";
+import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions, Channel, Attachment, ApplicationCommandSubCommandData } from "discord.js";
 import { prefix } from "..";
 import { logger } from "../events/errorDebugger";
+import { Commands } from "../commands";
 
 export enum ShoukoCommandCategory {
   General = "General",
@@ -39,6 +40,7 @@ export class ShoukoHybridCommand {
   targetMember?: GuildMember
   targetUser?: User
   targetId?: string
+  rawArguments?: string[]
 
   constructor (client: Client, context: Message | CommandInteraction | UserContextMenuCommandInteraction, _options: Array<ApplicationCommandOptionData>) {
     this.client = client;
@@ -58,7 +60,9 @@ export class ShoukoHybridCommand {
       this.targetId = this.targetId = (this.context as UserContextMenuCommandInteraction).targetId
     } else {
       this.commandName = parseRawArgs(context.content.trim().toLowerCase().slice(prefix.length))[0]
-      const args = parseMessageArgs(client, parseRawArgs(context.content.trim()).slice(1), _options as ApplicationCommandOptionData[]);
+      const rawArgs = parseRawArgs(context.content.trim()).slice(1);
+      this.rawArguments = rawArgs;
+      const args = parseMessageArgs(client, rawArgs, _options as ApplicationCommandOptionData[], this);
       this.options = args
       if (process.env.DEBUG_MODE) logger(`HybridCommandArgs [${this.commandName} (${this.user.username})]: ` + JSON.stringify(args))
     }
@@ -101,6 +105,26 @@ export class ShoukoHybridCommand {
 
   isChatInput(): boolean {
     return this.isInteraction(this.context)
+  }
+
+  getSubcommand(): string | null {
+    if (this.isInteraction(this.context)) {
+      return (this.context.options as CommandInteractionOptionResolver<CacheType>).getSubcommand();
+    } else if (this.isMessage(this.context)) {
+      if (this.rawArguments && this.rawArguments.length > 0) {
+        const command = Commands.find(c => c.name === this.commandName);
+        if (command && command.options && command.options.length > 0) {
+          const subcommand = command.options.find(o => o.name === this.rawArguments![0].toLowerCase());
+          return subcommand ? subcommand.name : null;
+        } else {
+          return null
+        }
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   // Type guard to check if context is a Message
@@ -219,12 +243,19 @@ function parseRawArgs(input: string): Array<string> {
   return args;
 }
 
-const parseMessageArgs = (client: Client, args: string[], commandOptions: ApplicationCommandOptionData[]): ParsedOptions => {
+const parseMessageArgs = (client: Client, args: string[], commandOptions: ApplicationCommandOptionData[], interaction: ShoukoHybridCommand): ParsedOptions => {
   const options: ParsedOptions = {};
+  const _command = Commands.find((c) => c.name === interaction.commandName);
+  let optionsToParse;
+  if (interaction.getSubcommand() != null && _command && _command.options) {
+    optionsToParse = (_command.options.find(o => o.name === interaction.getSubcommand()) as ApplicationCommandSubCommandData).options;
+  } else {
+    optionsToParse = commandOptions
+  }
 
   try {
-    (commandOptions as Array<ApplicationCommandOptionData>).forEach((option, index) => {
-      const arg = args[index];
+    (optionsToParse as Array<ApplicationCommandOptionData>).forEach((option, index) => {
+      const arg = args[interaction.getSubcommand() != null ? index + 1 : index];
 
       if ((option as any).required && (arg === undefined || arg === null)) throw new Error("Missing required arguments: " + option.name)
 
