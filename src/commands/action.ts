@@ -6,6 +6,7 @@ export const RequiredUserOption: ApplicationCommandOption = {
   name: "user",
   description: "target user",
   type: ApplicationCommandOptionType.User,
+  required: true
 };
   
 export const action: Command = {
@@ -38,7 +39,7 @@ export const action: Command = {
    // };
 
     const target = interaction.getOption<User>("user");
-    const action = interaction.getOption<string>("hug")!;
+    const action = interaction.getSubcommand();
   //  const req = await fetch(new URL(action, BASE_URLS.ACTIONS));
     
    // const {
