@@ -230,7 +230,6 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
       // Parse and store the argument based on the type defined in the command options
       switch (option.type) {
         case ApplicationCommandOptionType.User:
-          {
             if (!arg) {
               options[option.name] = null;
               break;
@@ -240,7 +239,6 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
             options[option.name] = isValid
               ? (client.users.cache.get(userId) ?? client.users.fetch(userId))
               : null;
-          }
           break;
         case ApplicationCommandOptionType.Channel:
           const channelId = arg.replace(/([^0-9]+)/g, "");
@@ -248,6 +246,7 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
           options[option.name] = isValid
             ? (client.channels.cache.get(channelId) ?? client.channels.fetch(channelId))
             : null;
+          break;
         case ApplicationCommandOptionType.Boolean:
           options[option.name] = arg ? arg.toLowerCase() === "true" : false;
           break;
