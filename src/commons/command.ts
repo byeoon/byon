@@ -238,6 +238,12 @@ const parseMessageArgs = (client: Client, args: string[], commandOptions: Applic
         case ApplicationCommandOptionType.String:
           options[option.name] = arg || null;
           break;
+        case ApplicationCommandOptionType.Channel:
+          options[option.name] = arg;
+          break;
+        case ApplicationCommandOptionType.Subcommand:
+          options[option.name] = arg;
+          break;
         default:
           options[option.name] = null; // Handle other types as needed
           break;
