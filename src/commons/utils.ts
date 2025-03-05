@@ -111,7 +111,6 @@ export const getAllResourceUsage = async (): Promise<any> => {
     heapTotal: (memoryUsage.heapTotal / 1024 / 1024).toFixed(2), // V8's heap total
     heapUsed: (memoryUsage.heapUsed / 1024 / 1024).toFixed(2), // V8's heap used
     external: (memoryUsage.external / 1024 / 1024).toFixed(2), // C++ objects bound to JavaScript objects
-    arrayBuffers: (memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2) // Memory used by ArrayBuffer and SharedArrayBuffer
   };
 
   const processUsage = {
