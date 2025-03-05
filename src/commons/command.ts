@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions } from "discord.js";
+import { ApplicationCommandOptionData, ApplicationCommandOptionType, ApplicationIntegrationType, AutocompleteInteraction, BaseApplicationCommandData, CacheType, ChatInputApplicationCommandData, Client, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, InteractionContextType, InteractionReplyOptions, InteractionEditReplyOptions, InteractionResponse, Message, MessageApplicationCommandData, MessageContextMenuCommandInteraction, MessageCreateOptions, MessagePayload, TextBasedChannel, User, UserApplicationCommandData, UserContextMenuCommandInteraction, InteractionDeferReplyOptions, Channel } from "discord.js";
 import { prefix } from "..";
 import { logger } from "../events/errorDebugger";
 
@@ -22,6 +22,8 @@ type CommandOptionValue =
   | Promise<User>
   | GuildMember
   | Promise<GuildMember>
+  | Channel
+  | Promise<Channel>
   | null
 
 export class ShoukoHybridCommand {
