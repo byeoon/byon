@@ -5,7 +5,6 @@ import { Commands } from "../commands";
 
 export enum ShoukoCommandCategory {
   General = "General",
-  Shouko = "Shouko",
   Misc = "Misc",
   Acts = "Actions"
 }

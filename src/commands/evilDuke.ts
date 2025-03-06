@@ -23,7 +23,7 @@ export const evilDuke: Command = {
 
     await interaction.followUp({
         embeds: [pingEmbed],
-        content: 'meow'
+        content: 'java duke emote here but im lazy' 
       })
   }
 }

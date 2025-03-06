@@ -4,8 +4,8 @@ import { getAllResourceUsage } from "../commons/utils";
 import { getConfigValue } from "../events/errorDebugger";
 
 export const pingCommand: Command = {
-  name: "ping",
-  description: "See bot status",
+  name: "stats",
+  description: "See ping and other statistics",
   category: ShoukoCommandCategory.Misc,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
@@ -20,7 +20,7 @@ export const pingCommand: Command = {
     let processUsage = await getAllResourceUsage();
 
     const pingEmbed = new EmbedBuilder()
-    .setTitle("my stats")
+    .setTitle(">_ BYON_STATS")
     .addFields([
       {
         name: "ping/ws",
@@ -38,8 +38,7 @@ export const pingCommand: Command = {
     .setColor(getConfigValue("EMBED_COLOR"));
 
     await interaction.followUp({
-      embeds: [pingEmbed],
-      content: 'meow'
+      embeds: [pingEmbed]
     })
   }
 }
