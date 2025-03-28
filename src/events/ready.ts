@@ -4,7 +4,7 @@ import { logger } from './errorDebugger';
 
 const presenceRefresh = async (client: Client) => {
   client.user?.setPresence({
-    activities: [{"name": "haii :3 • s.help", type: ActivityType.Custom}],
+    activities: [{"name": "being the best • b!help", type: ActivityType.Competing}],
     status: "online"
   })
 }
@@ -17,8 +17,10 @@ export default (client: Client): void => {
       logger ("Total commands: " + [...Commands, ...UserCommands, ...MessageCommands].length);
     });
     let guilds = (await client?.guilds.fetch());
+  //  let users = (await client?.users.fetch(client?.users.resolveId()));
     logger ("Successfully logged in as " + client?.user?.tag);
     logger ("Guilds (" + guilds.toJSON().length + "): " + guilds.map(g => g.name).join(", "));
+  //  logger ("Users (" + users + ")");
 
     await presenceRefresh(client);
     setInterval(async () => await presenceRefresh(client), 60_000)

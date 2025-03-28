@@ -5,11 +5,12 @@ import { HelpCommand } from "./commands/help";
 import { guildAvatarContext, userAvatar, userAvatarContext } from "./commands/userAvatar";
 import { userBanner, userBannerContext } from "./commands/userBanner";
 import { userProfile, userProfileContext } from "./commands/userProfile";
-import { pingCommand } from "./commands/ping";
+import { stats } from "./commands/stats";
 import { komiTalk } from "./commands/komiTalk";
 import { action } from "./commands/action";
 import { evilDuke } from "./commands/evilDuke";
 import { neko } from "./commands/neko";
+import { readifCute } from "./commands/readifcute";
 
 export const Commands: Command[] = [
   komiJumpscare,
@@ -19,10 +20,11 @@ export const Commands: Command[] = [
   userAvatar,
   userBanner,
   userProfile,
-  pingCommand,
+  stats,
   action,
   evilDuke,
-  neko
+  neko,
+  readifCute
 ];
 
 export const UserCommands: UserCommand[] = [

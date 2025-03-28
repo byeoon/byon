@@ -5,7 +5,7 @@ import { getConfigValue, logger } from "../events/errorDebugger";
 
 export const komiTalk: Command = {
   name: "talk",
-  description: "Talk with shouko, she's a little lonely around here..",
+  description: "Talk with byon ai (this doesnt work btw).",
   category: ShoukoCommandCategory.Misc,
   options: [
     {

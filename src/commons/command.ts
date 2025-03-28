@@ -5,8 +5,7 @@ import { Commands } from "../commands";
 
 export enum ShoukoCommandCategory {
   General = "General",
-  Misc = "Misc",
-  Acts = "Actions"
+  Misc = "Misc"
 }
 
 export interface ShoukoCommand extends BaseApplicationCommandData {
@@ -204,7 +203,7 @@ export class ShoukoHybridCommand {
       if (!this.context.isRepliable()) throw new Error("Interaction has already been replied.");
       return await this.context.deferReply(content as InteractionDeferReplyOptions)
     } else if (this.isMessage(this.context)) {
-      (content as MessageCreateOptions).content = "Shouko is thinking..";
+      (content as MessageCreateOptions).content = ">Initializing reply module...";
       (content as MessageCreateOptions).allowedMentions = { repliedUser: false }
       this.message = await this.context.reply(content as MessageCreateOptions)
       return this.message;

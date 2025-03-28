@@ -126,7 +126,6 @@ export const chatBot = async (text: string, user: User, history?: Array<Content>
   if (response.toLowerCase().includes("i am a large language model") 
     || response.toLowerCase().includes("trained by google")
     || response.toLowerCase().includes("against my programming")
-    || response.toLowerCase().includes("please provide")
   ) response = "no just no.. i don't want to!!!!";
 
   await appendChatHistory(user.id, [

@@ -12,7 +12,7 @@ export const RequiredUserOption: ApplicationCommandOption = {
 export const action: Command = {
   name: "act",
   description: "action,,,",
-  category: ShoukoCommandCategory.Acts,
+  category: ShoukoCommandCategory.General,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
   options: [

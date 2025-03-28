@@ -3,7 +3,7 @@ import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextTy
 import { getAllResourceUsage } from "../commons/utils";
 import { getConfigValue } from "../events/errorDebugger";
 
-export const pingCommand: Command = {
+export const stats: Command = {
   name: "stats",
   description: "See ping and other statistics",
   category: ShoukoCommandCategory.Misc,
@@ -20,7 +20,8 @@ export const pingCommand: Command = {
     let processUsage = await getAllResourceUsage();
 
     const pingEmbed = new EmbedBuilder()
-    .setTitle(">_ BYON_STATS")
+    .setTitle(">BYON_STATS")
+    .setDescription("I'm open source!")
     .addFields([
       {
         name: "ping/ws",
