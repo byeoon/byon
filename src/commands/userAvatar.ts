@@ -1,7 +1,6 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, ApplicationIntegrationType, Client, EmbedBuilder, GuildMember, InteractionContextType, User } from "discord.js";
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
 import { getConfigValue, logger } from "../events/errorDebugger";
-import { shoukoVersion } from "..";
 import { getUsername } from "../commons/utils";
 
 const generateMessage = async (_client: Client, interaction: ShoukoHybridCommand) => {
@@ -24,10 +23,7 @@ const generateMessage = async (_client: Client, interaction: ShoukoHybridCommand
   .setTitle(`${getUsername(target)}'s avatar`)
   .setImage(avatarURL)
   .setURL(avatarURL)
-  .setColor(getConfigValue("EMBED_COLOR"))
-  .setFooter({
-    text: `byon v${shoukoVersion}`
-  });
+  .setColor(getConfigValue("EMBED_COLOR"));
 
   await interaction.reply({
     embeds: [avatarEmbed],

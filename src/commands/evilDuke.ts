@@ -17,13 +17,13 @@ export const evilDuke: Command = {
   
     const pingEmbed = new EmbedBuilder()
     .setTitle("he is.... everywhere.")
-    .setImage("https://media1.tenor.com/m/JNrPF3XuHXIAAAAd/java-duke.gif")
+    .setImage("https://c.tenor.com/JNrPF3XuHXIAAAAd/tenor.gif")
     .setColor(getConfigValue("EMBED_COLOR"));
 
 
     await interaction.followUp({
         embeds: [pingEmbed],
-        content: 'java duke emote here but im lazy' 
+        content: '<:javaduke:1423879079618285588>' 
       })
   }
 }

@@ -5,7 +5,6 @@ export interface ShoukoConfig {
   ERROR_MESSAGES?: Array<string>,
   CACHE_TTL: number,
   EMBED_COLOR: string,
-  JUMPSCARE_GIFS: Array<string>,
   DEBUG: boolean,
   ERROR_REPLACES: object
 }

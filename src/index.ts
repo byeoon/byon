@@ -12,11 +12,11 @@ require("dotenv").config("../.env");
 
 console.log("[Byon] Attempting to connect to discord gateway");
 
-(DefaultWebSocketManagerOptions.identifyProperties as any).browser = "Discord Android";
+(DefaultWebSocketManagerOptions.identifyProperties as any).browser = "Discord Desktop";
 (DefaultWebSocketManagerOptions.identifyProperties as any).os = "byon";
 (DefaultWebSocketManagerOptions.identifyProperties as any).device = "byon";
 
-export const shoukoVersion = process.env.npm_package_version
+export const byonVersion = process.env.npm_package_version
 export const prefix = "b!"
 
 

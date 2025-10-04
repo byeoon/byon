@@ -18,7 +18,7 @@ export const action: Command = {
   options: [
     {
         name: "hug",
-        description: "💕 i need a hug",
+        description: "💕 i want to hug seele",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
             RequiredUserOption
@@ -42,7 +42,7 @@ export const action: Command = {
   },
   {
     name: "cuddle",
-    description: "💕 i REALLY want to cuddle seele",
+    description: "💕 i want to cuddle seele",
     type: ApplicationCommandOptionType.Subcommand,
     options: [
         RequiredUserOption
@@ -50,7 +50,7 @@ export const action: Command = {
   },
   {
     name: "blush",
-    description: "❤ me when uhhhh yea i think u get the point already",
+    description: "💕 me when uhhhh yea i think u get the point already",
     type: ApplicationCommandOptionType.Subcommand,
   },
   {

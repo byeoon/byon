@@ -1,6 +1,6 @@
 {
   "name": "byon",
-  "version": "1.0",
+  "version": "1.1",
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -8,7 +8,7 @@
     "start": "echo \"Running on Production!\" && node ./dist/index.js"
   },
   "keywords": [],
-  "author": "specifix5",
+  "author": "byeoon, specifix5",
   "license": "MIT",
   "description": "Multi-purpose discord bot",
   "dependencies": {

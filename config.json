@@ -3,8 +3,8 @@
   "CACHE_TTL": 600,
   "WHITELISTED_USERS": [
     "1167275288036655133",
-    "514986731263492096",
-    "485749822322769920"
+    "485749822322769920",
+    "1019146014352998491"
   ],
   "WHITELISTED_GUILDS": [
     "1218305058912079983",
@@ -14,39 +14,33 @@
     "1167275288036655133"
   ],
   "ERROR_MESSAGES": [
-    "Uhhhh, something has gone wrong!!!! sorry!!",
+    "i think i messed up",
     "I've caught an error!!",
-    "Oopsies, I might have done something wrong 3:",
-    "Sorry!!!!!! (T^T \")",
-    "eeeeyikes!"
+    "that aint supposed to happen",
+    "eeeeyikes! error!"
   ],
   "NOT_WHITELISTED_MESSAGES": [
     "meow, can't do that!!!",
     "erm.... nuh uh uh!!!!!"
   ],
   "HELP_MESSAGES": [
-    "here you goo!! 👌",
+    "here you go",
     "dw here comes help!! :3",
     "help 4 u!! :3 "
   ],
   "INTERACTION_NOT_ALLOWED_MESSAGES" : [
     "that's not for you.. ",
-    "not ur interaction nyan ",
+    "not ur interaction ",
     "not for u dummy!!!"
   ],
   "RESPONSE_BLOCKED": [
-    "!! meow? (what?)",
+    "ur banned",
     "mrrp meow meow mrrp meow.. (nuh uh uh)",
     "meow :3 !!"
   ],
-  "JUMPSCARE_GIFS": [
-    "https://cdn.discordapp.com/attachments/1293733260798722048/1293949065880666142/wawa.gif?ex=67093b79&is=6707e9f9&hm=c49871281679ccedfce10786eb8d73de368179ea18a127795f437f8e644a8884&",
-    "https://cdn.discordapp.com/attachments/1147843031077228564/1293572523514003506/mikushow.png?ex=6707dccb&is=67068b4b&hm=8cbeaa872899a3a14b41941c1e317d8b5aeefe6c1495d3b4ca0b9c6feaf4d7cc&"
-  ],
   "DEBUG": false, 
   "EMOJI_REPLACES": {
-    "🤤": "<:catdrooling:1295023501891076106>",
-    "👌": "<:catokay:1295023983090991136>"
+    "🤤": "<:catdrooling:1295023501891076106>" 
   },
   "BADGES_LIST": {
     "Staff": {
@@ -107,7 +101,7 @@
     "Komi": {
       "emoji": " <:shouko:1297466331691483197>"
     },
-    "Specifix": {
+    "Byeoon": {
       "emoji": "<:badge_staff:1346504072764719126> ",
       "url": "https://byeoon.dev/"
     }

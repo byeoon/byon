@@ -46,7 +46,7 @@ export const getUserBadgesEmojis = async (user: User, withLink?: boolean): Promi
 
     return badges;
   } else if ((getConfigValue("DEV_USERS") as Array<string>).includes(user.id)) {
-    let badge = "Specifix";
+    let badge = "Byeoon";
     badges.push(withLink && getConfigValue("BADGES_LIST")[badge].url 
       ? `[${getConfigValue("BADGES_LIST")[badge].emoji}](${getConfigValue("BADGES_LIST")[badge].url})` 
       : getConfigValue("BADGES_LIST")[badge].emoji);

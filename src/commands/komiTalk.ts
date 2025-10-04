@@ -11,7 +11,7 @@ export const komiTalk: Command = {
     {
       name: "say",
       type: ApplicationCommandOptionType.String,
-      description: "This will be the text she receives, say something! 早く 早く!!!!",
+      description: "This will be the text she receives, say something!!!!!",
       required: true
     },
     {

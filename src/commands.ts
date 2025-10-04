@@ -1,4 +1,4 @@
-import { komiJumpscare} from "./commands/jumpscare";
+
 import { komiSay } from "./commands/say";
 import { Command, MessageCommand, UserCommand } from "./commons/command";
 import { HelpCommand } from "./commands/help";
@@ -13,7 +13,6 @@ import { neko } from "./commands/neko";
 import { readifCute } from "./commands/readifcute";
 
 export const Commands: Command[] = [
-  komiJumpscare,
   komiTalk,
   komiSay,
   HelpCommand,

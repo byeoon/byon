@@ -1,7 +1,6 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, Client, EmbedBuilder, GuildMember, User } from "discord.js";
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextType, UniversalIntegrationType, UserCommand } from "../commons/command";
 import { getConfigValue } from "../events/errorDebugger";
-import { shoukoVersion } from "..";
 import { getRawMember, getUsername, RawMemberData } from "../commons/utils";
 
 const generateMessage = async (client: Client, interaction: ShoukoHybridCommand) => {
@@ -27,10 +26,7 @@ const generateMessage = async (client: Client, interaction: ShoukoHybridCommand)
   .setTitle(`${getUsername(target)}'s banner`)
   .setImage(bannerURL)
   .setURL(bannerURL)
-  .setColor(getConfigValue("EMBED_COLOR"))
-  .setFooter({
-    text: `shouko v${shoukoVersion}`
-  });
+  .setColor(getConfigValue("EMBED_COLOR"));
 
   if (!bannerURL) {
     await interaction.reply({

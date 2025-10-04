@@ -2,7 +2,7 @@ import { ActionRowBuilder, ApplicationCommandOptionData, ApplicationCommandOptio
 import { Command, ShoukoCommandCategory, ShoukoHybridCommand, TranslateApplicationCommandOptionType, UniversalContextType, UniversalIntegrationType } from "../commons/command";
 import { Commands } from "../commands";
 import { getConfigValue} from "../events/errorDebugger";
-import { prefix, shoukoVersion } from "..";
+import { prefix, byonVersion } from "..";
 import { filterEmojis } from "../commons/aiwrapper";
 
 const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage: number, category?: string, selectedCommand?: Command ): Promise<Message<boolean>> => {
@@ -11,7 +11,7 @@ const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage
   .setColor(getConfigValue("EMBED_COLOR"))
   .setTitle("**Byon Help Desk**")
   .setFooter({
-    text: 'byon v' + shoukoVersion
+    text: 'byon v' + byonVersion
   });
 
   if (!category) category = "General"; 
