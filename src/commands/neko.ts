@@ -4,7 +4,7 @@ import { getConfigValue } from "../events/errorDebugger";
 
 export const neko: Command = {
   name: "neko",
-  description: "woah",
+  description: "catgirls!",
   category: ShoukoCommandCategory.Misc,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,

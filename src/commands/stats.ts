@@ -8,7 +8,7 @@ import { byonVersion } from "..";
 export const stats: Command = {
   name: "stats",
   description: "See my ping, uptime, total members, and more!",
-  category: ShoukoCommandCategory.Misc,
+  category: ShoukoCommandCategory.General,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
   run: async (client: Client, interaction: ShoukoHybridCommand) => {

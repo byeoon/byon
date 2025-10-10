@@ -4,7 +4,7 @@ import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextTy
 export const readifCute: Command = {
   name: "readifcute",
   description: "read if cute",
-  category: ShoukoCommandCategory.Misc,
+  category: ShoukoCommandCategory.Fun,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
   run: async (_client: Client, interaction: ShoukoHybridCommand) => { 

@@ -7,7 +7,7 @@ import { getConfigValue } from "../events/errorDebugger"
 export const evilDuke: Command = {
   name: "middlefingerpenguinvirus",
   description: "java duke",
-  category: ShoukoCommandCategory.Misc,
+  category: ShoukoCommandCategory.Fun,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
   run: async (_client: Client, interaction: ShoukoHybridCommand) => {

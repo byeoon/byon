@@ -5,7 +5,9 @@ import { Commands } from "../commands";
 
 export enum ShoukoCommandCategory {
   General = "General",
-  Misc = "Misc"
+  Misc = "Misc",
+  Fun = "Fun",
+  Action = "Action" // it breaks the help menu. wish i was kidding. LMAO
 }
 
 export interface ShoukoCommand extends BaseApplicationCommandData {

@@ -5,7 +5,7 @@ import { getConfigValue } from "../events/errorDebugger";
 export const eightball: Command = {
     name: "8ball",
     description: "What will the mystical 8-ball tell you today?",
-    category: ShoukoCommandCategory.Misc,
+    category: ShoukoCommandCategory.Fun,
     integrationTypes: UniversalIntegrationType,
     contexts: UniversalContextType,
     options: [

@@ -4,7 +4,7 @@ import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextTy
 export const ping: Command = {
   name: "ping",
   description: "Pong! 🏓",
-  category: ShoukoCommandCategory.Misc,
+  category: ShoukoCommandCategory.General,
   contexts: UniversalContextType,
   integrationTypes: UniversalIntegrationType,
   run: async (client: Client, interaction: ShoukoHybridCommand) => {

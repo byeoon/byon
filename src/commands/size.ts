@@ -4,7 +4,7 @@ import { Command, ShoukoCommandCategory, ShoukoHybridCommand, UniversalContextTy
 export const size: Command = {
     name: "size",
     description: "You know what it means.",
-    category: ShoukoCommandCategory.Misc,
+    category: ShoukoCommandCategory.Fun,
     integrationTypes: UniversalIntegrationType,
     contexts: UniversalContextType,
     options: [

@@ -11,8 +11,8 @@ export const RequiredUserOption: ApplicationCommandOption = {
 
 export const action: Command = {
   name: "act",
-  description: "action,,,",
-  category: ShoukoCommandCategory.General,
+  description: "do an action,,,",
+  category: ShoukoCommandCategory.Action, // check the comment in ShoukoCommandCategory
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
   // i want to hug pat kiss cuddle seele i love her
@@ -104,6 +104,15 @@ export const action: Command = {
         RequiredUserOption
       ],
     },
+    {
+      name: "slap",
+      description: "Ouch!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        RequiredUserOption
+      ],
+    },
+    
   ],
 
 
@@ -131,7 +140,8 @@ export const action: Command = {
       dance: `${victim} is dancing! Nice moves!`,
       lurk: `${victim} is lurking... shhh...`,
       stare: `${victim} is giving an ice cold stare.`,
-      handhold: `${victim} is holding hands with ${target}.. woah <:blushold:1309538510402752512>`
+      handhold: `${victim} is holding hands with ${target}.. woah <:blushold:1309538510402752512>`,
+      slap: `${victim} just slapped ${target}.. ouch!!`
     };
 
     const subcommand = interaction.getSubcommand() ?? "hug"; // if it goes wrong (99.9% chance it wont)
