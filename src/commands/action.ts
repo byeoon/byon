@@ -15,7 +15,7 @@ export const action: Command = {
   category: ShoukoCommandCategory.Action, // check the comment in ShoukoCommandCategory
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
-  // i want to hug pat kiss cuddle seele i love her
+  // i want to hug pat kiss cuddle and hold hands with seele i love her
   // i have to make it a comment because gotta step up bot professionality :(
   options: [
     {
@@ -97,6 +97,11 @@ export const action: Command = {
       type: ApplicationCommandOptionType.Subcommand,
     },
     {
+      name: "jump",
+      description: "Jumping for joy!",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
       name: "handhold",
       description: "💕 How romantical!",
       type: ApplicationCommandOptionType.Subcommand,
@@ -141,7 +146,8 @@ export const action: Command = {
       lurk: `${victim} is lurking... shhh...`,
       stare: `${victim} is giving an ice cold stare.`,
       handhold: `${victim} is holding hands with ${target}.. woah <:blushold:1309538510402752512>`,
-      slap: `${victim} just slapped ${target}.. ouch!!`
+      slap: `${victim} just slapped ${target}.. ouch!!`,
+      jump: `${victim} is jumping for joy!`
     };
 
     const subcommand = interaction.getSubcommand() ?? "hug"; // if it goes wrong (99.9% chance it wont)

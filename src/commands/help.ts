@@ -11,8 +11,10 @@ const generateHelpMessage = async (interaction: ShoukoHybridCommand, currentPage
   .setColor(getConfigValue("EMBED_COLOR"))
   .setTitle("**Byon Help Desk**")
   .setFooter({
-    text: 'byon v' + byonVersion
-  });
+    text: `byon v${byonVersion} `,
+    iconURL: "https://cdn.discordapp.com/avatars/1309309285624451133/6f25393b9fdc30fc2b189ef7921495eb.png?size=1024"
+  })
+  .setTimestamp()
 
   if (!category) category = "General"; 
   let shownPrefix = interaction.isMessageBased() ? prefix : "/";
