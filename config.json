@@ -4,7 +4,8 @@
   "WHITELISTED_USERS": [
     "1167275288036655133",
     "485749822322769920",
-    "1019146014352998491"
+    "1019146014352998491",
+    "275782056246640642"
   ],
   "WHITELISTED_GUILDS": [
     "1218305058912079983",
@@ -15,7 +16,7 @@
   ],
   "ERROR_MESSAGES": [
     "i think i messed up",
-    "I've caught an error!!",
+    "500 internal error :(",
     "that aint supposed to happen",
     "eeeeyikes! error!"
   ],
