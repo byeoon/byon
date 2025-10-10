@@ -4,7 +4,7 @@ import { logger } from './errorDebugger';
 
 const presenceRefresh = async (client: Client) => {
   client.user?.setPresence({
-    activities: [{"name": `over at least ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b, 0)} people • b!help`, type: ActivityType.Watching}],
+    activities: [{"name": `over ${client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a + b, 0)} people • b!help`, type: ActivityType.Watching}],
     status: "online"
   })
 }

@@ -11,7 +11,7 @@ export const neko: Command = {
   options: [
     {
         name: "ephmeral",
-        description: "show or not",
+        description: "Have the message appear in chat",
         type: ApplicationCommandOptionType.Boolean,
     },
   ],
@@ -24,7 +24,7 @@ export const neko: Command = {
     const { results: [{ url }] } = (await req.json()) as APIActionResult;
 
       const pingEmbed = new EmbedBuilder()
-      .setTitle("A cute neko for you")
+      .setTitle("Here's a neko for you!")
       .setImage(url)
       .setFooter({
         text: 'Source: ' + BASE_URLS.ACTIONS

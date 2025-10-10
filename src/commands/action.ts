@@ -8,85 +8,149 @@ export const RequiredUserOption: ApplicationCommandOption = {
   type: ApplicationCommandOptionType.User,
   required: true
 };
-  
+
 export const action: Command = {
   name: "act",
   description: "action,,,",
   category: ShoukoCommandCategory.General,
   integrationTypes: UniversalIntegrationType,
   contexts: UniversalContextType,
+  // i want to hug pat kiss cuddle seele i love her
+  // i have to make it a comment because gotta step up bot professionality :(
   options: [
     {
-        name: "hug",
-        description: "💕 i want to hug seele",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-            RequiredUserOption
-        ],
+      name: "hug",
+      description: "💕 Give somebody a hug!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        RequiredUserOption
+      ],
     },
     {
-        name: "pat",
-        description: "💕 i want to pat seele",
-        type: ApplicationCommandOptionType.Subcommand,
-        options: [
-            RequiredUserOption
-        ],
+      name: "pat",
+      description: "💕 Give somebody a headpat!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        RequiredUserOption
+      ],
     },
     {
       name: "kiss",
-      description: "💕 i want to kiss seele",
+      description: "💕 Give somebody a kiss!",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
-          RequiredUserOption
+        RequiredUserOption
       ],
-  },
-  {
-    name: "cuddle",
-    description: "💕 i want to cuddle seele",
-    type: ApplicationCommandOptionType.Subcommand,
-    options: [
+    },
+    {
+      name: "cuddle",
+      description: "💕 Cuddle somebody!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         RequiredUserOption
-    ],
-  },
-  {
-    name: "blush",
-    description: "💕 me when uhhhh yea i think u get the point already",
-    type: ApplicationCommandOptionType.Subcommand,
-  },
-  {
-    name: "tickle",
-    description: "💕 tee hee hee",
-    type: ApplicationCommandOptionType.Subcommand,
-    options: [
+      ],
+    },
+    {
+      name: "tickle",
+      description: "💕 Tickle somebody!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         RequiredUserOption
-    ],
-  },
-  {
-    name: "poke",
-    description: "💕 boop",
-    type: ApplicationCommandOptionType.Subcommand,
-    options: [
+      ],
+    },
+    {
+      name: "poke",
+      description: "💕 Boop someone!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         RequiredUserOption
-    ],
-  },
+      ],
+    },
+    {
+      name: "blush",
+      description: "Blush!",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "facepalm",
+      description: "Facepalm..!",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "cry",
+      description: "Aww, why are you crying? ☹️",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "dance",
+      description: "Start dancing!",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "lurk",
+      description: "Don't mind me, I'm just lurking!",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "stare",
+      description: "I see you.",
+      type: ApplicationCommandOptionType.Subcommand,
+    },
+    {
+      name: "handhold",
+      description: "💕 How romantical!",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        RequiredUserOption
+      ],
+    },
   ],
-  run: async (_client: Client, interaction: ShoukoHybridCommand) => { 
+
+
+  run: async (_client: Client, interaction: ShoukoHybridCommand) => {
     const BASE_URLS = {
       ACTIONS: "https://nekos.best/api/v2/",
     };
 
     const target = interaction.getOption<User>("user");
+    const victim = interaction.getUser(); // idfk what to call it
     const action = interaction.getSubcommand();
     const req = await fetch(new URL(action + "", BASE_URLS.ACTIONS));
     let amount = 1; // will make this work soon
-    
+
+    const actionDialogues: Record<string, string> = {
+      hug: `${victim} is giving a big hug to ${target}`,
+      pat: `${victim} is giving a nice headpat to ${target}`,
+      kiss: `${victim} just gave ${target} a big kiss!`,
+      cuddle: `${victim} is cuddling up with ${target}, aww!!`,
+      tickle: `${victim} is tickling ${target}, tee hee hee!`,
+      poke: `${victim} just poked ${target}!`,
+      blush: `${victim} is blushing! How cute!`,
+      facepalm: `${victim} just facepalmed.. bruh.`,
+      cry: `${victim} is crying... sigh.. <:sadcat:1426025555878215771>`,
+      dance: `${victim} is dancing! Nice moves!`,
+      lurk: `${victim} is lurking... shhh...`,
+      stare: `${victim} is giving an ice cold stare.`,
+      handhold: `${victim} is holding hands with ${target}.. woah <:blushold:1309538510402752512>`
+    };
+
+    const subcommand = interaction.getSubcommand() ?? "hug"; // if it goes wrong (99.9% chance it wont)
+    const dialogue = actionDialogues[subcommand];
+
     const {
       results: [{ url, anime_name }],
-      } = (await req.json()) as APIActionResult;
+    } = (await req.json()) as APIActionResult;
 
-      const pingEmbed = new EmbedBuilder()
-      .setTitle("Awwww, adorable!")
-      .setDescription(`${target} has recieved ${amount} interactions!`)
+    const pingEmbed = new EmbedBuilder()
+      .setDescription(` **${dialogue}** \n \n *${target} has recieved ${amount} ${action}(s)!*`)
+      .setImage(url)
+      .setFooter({
+        text: 'Source: ' + anime_name
+      })
+      .setColor(getConfigValue("EMBED_COLOR"));
+
+    const embedSolo = new EmbedBuilder()
+      .setDescription(`**${dialogue}`)
       .setImage(url)
       .setFooter({
         text: 'Source: ' + anime_name
@@ -94,8 +158,8 @@ export const action: Command = {
       .setColor(getConfigValue("EMBED_COLOR"));
 
     await interaction.reply({
-      content: interaction.getOption<string>("text")?.toString() || "me when i get <@" + target + "> with my " + action,
-      embeds: [pingEmbed]
-    })
+      content: interaction.getOption<string>("text")?.toString(),
+      embeds: [target === null ? embedSolo : pingEmbed],
+    });
   }
 }

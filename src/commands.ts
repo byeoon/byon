@@ -6,14 +6,12 @@ import { guildAvatarContext, userAvatar, userAvatarContext } from "./commands/us
 import { userBanner, userBannerContext } from "./commands/userBanner";
 import { userProfile, userProfileContext } from "./commands/userProfile";
 import { stats } from "./commands/stats";
-import { komiTalk } from "./commands/komiTalk";
 import { action } from "./commands/action";
 import { evilDuke } from "./commands/evilDuke";
 import { neko } from "./commands/neko";
 import { readifCute } from "./commands/readifcute";
 
 export const Commands: Command[] = [
-  komiTalk,
   komiSay,
   HelpCommand,
   userAvatar,
